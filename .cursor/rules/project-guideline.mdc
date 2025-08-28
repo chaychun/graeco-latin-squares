@@ -1,0 +1,30 @@
+---
+description: Project guidelines for Graeco-Latin Squares art generator
+globs:
+alwaysApply: true
+---
+
+# Graeco-Latin Squares Art Generator
+
+This project generates art from Graeco-Latin squares using mathematical constructions.
+
+## Tech Stack
+- Vite + React + TailwindCSS + shadcn UI + zustand
+
+## UI Guidelines
+- Always use shadcn components. Extend their styles when needed
+- Use existing components from `components/ui/` directory
+- If component doesn't exist, check shadcn catalog and install if available
+- Otherwise, construct custom components on top of shadcn
+
+## Style
+- Retro but modern aesthetic
+- Monochrome design
+- When need gray palette, use the neutral palette
+- Macintosh System 7 inspired UI feel
+- Pixelated fonts
+
+## Code Guidelines
+- No comments
+- Follow Rules of React
+- Avoid timeouts
