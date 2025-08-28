@@ -67,6 +67,7 @@
     }
   },
   "files": {
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": ["src/**/*.{js,jsx,ts,tsx,json,css}"]
   }
 }
