@@ -84,7 +84,7 @@ export default function Controls() {
                 value={size.toString()}
                 onValueChange={(value) => handleSizeChange(Number.parseInt(value, 10))}
               >
-                <SelectTrigger className="bg-white">
+                <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -102,7 +102,7 @@ export default function Controls() {
                 value={latinMultiplier.toString()}
                 onValueChange={(value) => setLatinMultiplier(Number.parseInt(value, 10))}
               >
-                <SelectTrigger className="bg-white">
+                <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -113,7 +113,6 @@ export default function Controls() {
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-slate-500 mt-1">Must satisfy gcd(|b-a|, n) = 1</p>
             </div>
 
             <div>
@@ -122,7 +121,7 @@ export default function Controls() {
                 value={greekMultiplier.toString()}
                 onValueChange={(value) => setGreekMultiplier(Number.parseInt(value, 10))}
               >
-                <SelectTrigger className="bg-white">
+                <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -133,7 +132,6 @@ export default function Controls() {
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-slate-500 mt-1">Must satisfy gcd(|b-a|, n) = 1</p>
             </div>
 
             <div>
@@ -144,7 +142,7 @@ export default function Controls() {
                   setPaletteType(value)
                 }
               >
-                <SelectTrigger className="bg-white">
+                <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
