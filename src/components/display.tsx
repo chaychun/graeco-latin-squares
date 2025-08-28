@@ -1,0 +1,96 @@
+import { Download } from "lucide-react"
+import { useRef } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { downloadPNG, downloadSVG } from "@/lib/downloads"
+import { generateGraecoLatinSquare } from "@/lib/graeco-latin"
+import { COLORED_PALETTE, GRAYSCALE_PALETTE, shiftPalette } from "@/lib/palettes"
+import { useGraecoLatinStore } from "@/lib/store"
+
+export default function Display() {
+  const { size, paletteType, backgroundShift, foregroundShift, latinMultiplier, greekMultiplier } =
+    useGraecoLatinStore()
+
+  const svgRef = useRef<SVGSVGElement>(null)
+
+  const square = generateGraecoLatinSquare(size, latinMultiplier, greekMultiplier)
+  const basePalette = paletteType === "colored" ? COLORED_PALETTE : GRAYSCALE_PALETTE
+  const backgroundColors = shiftPalette(basePalette.slice(0, size), backgroundShift)
+  const foregroundColors = shiftPalette(basePalette.slice(0, size), foregroundShift)
+
+  const cellSize = 60
+  const innerSize = cellSize * 0.4
+  const svgSize = size * cellSize
+
+  return (
+    <div className="flex-shrink-0 lg:flex-shrink-0">
+      <Card>
+        <CardHeader>
+          <CardTitle>Generated Graeco-Latin Square</CardTitle>
+        </CardHeader>
+        <CardContent className="flex justify-center">
+          <div className="bg-white p-4 rounded-lg shadow-inner">
+            <svg
+              ref={svgRef}
+              width={svgSize}
+              height={svgSize}
+              viewBox={`0 0 ${svgSize} ${svgSize}`}
+              className="border border-slate-200"
+            >
+              {square.latin.map((row, i) =>
+                row.map((latinValue, j) => {
+                  const greekValue = square.greek[i][j]
+                  const x = j * cellSize
+                  const y = i * cellSize
+                  const innerX = x + (cellSize - innerSize) / 2
+                  const innerY = y + (cellSize - innerSize) / 2
+
+                  return (
+                    <g key={`${latinValue}-${greekValue}`}>
+                      <rect
+                        x={x}
+                        y={y}
+                        width={cellSize}
+                        height={cellSize}
+                        fill={backgroundColors[latinValue]}
+                        stroke="#ffffff"
+                        strokeWidth="1"
+                      />
+                      <rect
+                        x={innerX}
+                        y={innerY}
+                        width={innerSize}
+                        height={innerSize}
+                        fill={foregroundColors[greekValue]}
+                        stroke="#ffffff"
+                        strokeWidth="0.5"
+                      />
+                    </g>
+                  )
+                })
+              )}
+            </svg>
+          </div>
+        </CardContent>
+      </Card>
+      <div className="mt-4 flex gap-2">
+        <Button
+          onClick={() => downloadSVG(svgRef.current, size)}
+          className="flex-1 bg-white"
+          variant="outline"
+        >
+          <Download className="w-4 h-4 mr-2" />
+          Download SVG
+        </Button>
+        <Button
+          onClick={() => downloadPNG(svgRef.current, svgSize, size)}
+          className="flex-1 bg-white"
+          variant="outline"
+        >
+          <Download className="w-4 h-4 mr-2" />
+          Download PNG
+        </Button>
+      </div>
+    </div>
+  )
+}

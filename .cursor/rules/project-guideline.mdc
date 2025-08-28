@@ -28,3 +28,5 @@ This project generates art from Graeco-Latin squares using mathematical construc
 - No comments
 - Follow Rules of React
 - Avoid timeouts
+- kebab-case for file naming
+
