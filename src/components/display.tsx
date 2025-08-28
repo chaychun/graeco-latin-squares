@@ -42,7 +42,7 @@ export default function Display() {
               width="100%"
               height="100%"
               viewBox={`0 0 ${svgSize} ${svgSize}`}
-              className="border border-slate-200 w-full h-full"
+              className="w-full h-full"
               preserveAspectRatio="xMidYMid meet"
             >
               {square.latin.map((row, i) =>
@@ -61,8 +61,6 @@ export default function Display() {
                         width={cellSize}
                         height={cellSize}
                         fill={backgroundColors[latinValue]}
-                        stroke="#ffffff"
-                        strokeWidth="1"
                       />
                       <rect
                         x={innerX}
@@ -70,8 +68,6 @@ export default function Display() {
                         width={innerSize}
                         height={innerSize}
                         fill={foregroundColors[greekValue]}
-                        stroke="#ffffff"
-                        strokeWidth="0.5"
                       />
                     </g>
                   )
