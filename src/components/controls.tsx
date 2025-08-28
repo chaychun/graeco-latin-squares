@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
-import { COLORED_PALETTE, GRAYSCALE_PALETTE, shiftPalette } from "@/lib/palettes"
+import {
+  GRAYSCALE_PALETTE,
+  PASTEL_PALETTE,
+  SCIENTIFIC_AMERICAN_59_PALETTE,
+  shiftPalette,
+} from "@/lib/palettes"
 import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Controls() {
@@ -55,7 +60,12 @@ export default function Controls() {
     })
   }
 
-  const basePalette = paletteType === "colored" ? COLORED_PALETTE : GRAYSCALE_PALETTE
+  const basePalette =
+    paletteType === "pastel"
+      ? PASTEL_PALETTE
+      : paletteType === "grayscale"
+        ? GRAYSCALE_PALETTE
+        : SCIENTIFIC_AMERICAN_59_PALETTE
   const backgroundColors = shiftPalette(basePalette.slice(0, size), backgroundShift)
   const foregroundColors = shiftPalette(basePalette.slice(0, size), foregroundShift)
 
@@ -130,14 +140,17 @@ export default function Controls() {
               <Label htmlFor="palette">Color Palette</Label>
               <Select
                 value={paletteType}
-                onValueChange={(value: "colored" | "grayscale") => setPaletteType(value)}
+                onValueChange={(value: "pastel" | "grayscale" | "scientific_american_59") =>
+                  setPaletteType(value)
+                }
               >
                 <SelectTrigger className="bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="colored">Colored</SelectItem>
+                  <SelectItem value="pastel">Pastel</SelectItem>
                   <SelectItem value="grayscale">Grayscale</SelectItem>
+                  <SelectItem value="scientific_american_59">Scientific American '59</SelectItem>
                 </SelectContent>
               </Select>
             </div>

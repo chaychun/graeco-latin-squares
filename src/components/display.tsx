@@ -4,7 +4,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { downloadPNG, downloadSVG } from "@/lib/downloads"
 import { generateGraecoLatinSquare } from "@/lib/graeco-latin"
-import { COLORED_PALETTE, GRAYSCALE_PALETTE, shiftPalette } from "@/lib/palettes"
+import {
+  GRAYSCALE_PALETTE,
+  PASTEL_PALETTE,
+  SCIENTIFIC_AMERICAN_59_PALETTE,
+  shiftPalette,
+} from "@/lib/palettes"
 import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Display() {
@@ -14,7 +19,12 @@ export default function Display() {
   const svgRef = useRef<SVGSVGElement>(null)
 
   const square = generateGraecoLatinSquare(size, latinMultiplier, greekMultiplier)
-  const basePalette = paletteType === "colored" ? COLORED_PALETTE : GRAYSCALE_PALETTE
+  const basePalette =
+    paletteType === "pastel"
+      ? PASTEL_PALETTE
+      : paletteType === "grayscale"
+        ? GRAYSCALE_PALETTE
+        : SCIENTIFIC_AMERICAN_59_PALETTE
   const backgroundColors = shiftPalette(basePalette.slice(0, size), backgroundShift)
   const foregroundColors = shiftPalette(basePalette.slice(0, size), foregroundShift)
 

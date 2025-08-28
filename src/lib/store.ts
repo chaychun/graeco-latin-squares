@@ -2,13 +2,13 @@ import { create } from "zustand"
 
 interface GraecoLatinState {
   size: number
-  paletteType: "colored" | "grayscale"
+  paletteType: "pastel" | "grayscale" | "scientific_american_59"
   backgroundShift: number
   foregroundShift: number
   latinMultiplier: number
   greekMultiplier: number
   setSize: (size: number) => void
-  setPaletteType: (paletteType: "colored" | "grayscale") => void
+  setPaletteType: (paletteType: "pastel" | "grayscale" | "scientific_american_59") => void
   setBackgroundShift: (shift: number) => void
   setForegroundShift: (shift: number) => void
   setLatinMultiplier: (multiplier: number) => void
@@ -17,13 +17,14 @@ interface GraecoLatinState {
 
 export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
   size: 5,
-  paletteType: "colored",
+  paletteType: "pastel",
   backgroundShift: 0,
   foregroundShift: 0,
   latinMultiplier: 1,
   greekMultiplier: 2,
   setSize: (size: number) => set({ size }),
-  setPaletteType: (paletteType: "colored" | "grayscale") => set({ paletteType }),
+  setPaletteType: (paletteType: "pastel" | "grayscale" | "scientific_american_59") =>
+    set({ paletteType }),
   setBackgroundShift: (backgroundShift: number) => set({ backgroundShift }),
   setForegroundShift: (foregroundShift: number) => set({ foregroundShift }),
   setLatinMultiplier: (latinMultiplier: number) => set({ latinMultiplier }),

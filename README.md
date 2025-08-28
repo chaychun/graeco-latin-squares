@@ -6,7 +6,7 @@ Generate beautiful geometric art using orthogonal Latin squares. Each cell conta
 
 - **Mathematical Construction**: Based on Graeco-Latin squares with orthogonal Latin multipliers
 - **Interactive Controls**: Adjust grid size (3×3, 5×5, 7×7, 9×9), multipliers, and color palettes
-- **Color Palettes**: Choose between vibrant colored or grayscale palettes
+- **Color Palettes**: Choose between pastel or grayscale palettes
 - **Color Shifting**: Rotate background and foreground color assignments
 - **Export Options**: Download generated art as SVG or PNG
 
