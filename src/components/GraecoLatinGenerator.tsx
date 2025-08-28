@@ -1,8 +1,9 @@
-import { Download, Grid, Palette } from "lucide-react"
+import { Download, Palette } from "lucide-react"
 import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Select,
   SelectContent,
@@ -113,174 +114,10 @@ export default function GraecoLatinGenerator() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-slate-800 mb-2 flex items-center justify-center gap-3">
-            <Grid className="w-8 h-8" />
-            Graeco-Latin Square Art Generator
-          </h1>
-          <p className="text-slate-600 max-w-2xl mx-auto">
-            Generate beautiful geometric art using orthogonal Latin squares. Each cell contains a
-            unique combination of background and foreground colors arranged in mathematical harmony.
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Palette className="w-5 h-5" />
-                  Controls
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <Label htmlFor="size">Grid Size (n)</Label>
-                  <Select
-                    value={size.toString()}
-                    onValueChange={(value) => handleSizeChange(Number.parseInt(value, 10))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="3">3×3</SelectItem>
-                      <SelectItem value="5">5×5</SelectItem>
-                      <SelectItem value="7">7×7</SelectItem>
-                      <SelectItem value="9">9×9</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label htmlFor="latinMultiplier">Latin Square Multiplier</Label>
-                  <Select
-                    value={latinMultiplier.toString()}
-                    onValueChange={(value) => setLatinMultiplier(Number.parseInt(value, 10))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {getAvailableMultipliers(greekMultiplier, false).map((multiplier) => (
-                        <SelectItem key={multiplier} value={multiplier.toString()}>
-                          {multiplier}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-slate-500 mt-1">Must satisfy gcd(|b-a|, n) = 1</p>
-                </div>
-
-                <div>
-                  <Label htmlFor="greekMultiplier">Greek Square Multiplier</Label>
-                  <Select
-                    value={greekMultiplier.toString()}
-                    onValueChange={(value) => setGreekMultiplier(Number.parseInt(value, 10))}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {getAvailableMultipliers(latinMultiplier, true).map((multiplier) => (
-                        <SelectItem key={multiplier} value={multiplier.toString()}>
-                          {multiplier}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-slate-500 mt-1">Must satisfy gcd(|b-a|, n) = 1</p>
-                </div>
-
-                <div>
-                  <Label htmlFor="palette">Color Palette</Label>
-                  <Select
-                    value={paletteType}
-                    onValueChange={(value: "colored" | "grayscale") => setPaletteType(value)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="colored">Colored</SelectItem>
-                      <SelectItem value="grayscale">Grayscale</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label>Background Shift: {backgroundShift}</Label>
-                  <Slider
-                    value={[backgroundShift]}
-                    onValueChange={(value) => setBackgroundShift(value[0])}
-                    max={size - 1}
-                    step={1}
-                    className="mt-2"
-                  />
-                </div>
-
-                <div>
-                  <Label>Foreground Shift: {foregroundShift}</Label>
-                  <Slider
-                    value={[foregroundShift]}
-                    onValueChange={(value) => setForegroundShift(value[0])}
-                    max={size - 1}
-                    step={1}
-                    className="mt-2"
-                  />
-                </div>
-
-                <div className="pt-4 space-y-2">
-                  <Button onClick={downloadSVG} className="w-full bg-transparent" variant="outline">
-                    <Download className="w-4 h-4 mr-2" />
-                    Download SVG
-                  </Button>
-                  <Button onClick={downloadPNG} className="w-full bg-transparent" variant="outline">
-                    <Download className="w-4 h-4 mr-2" />
-                    Download PNG
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="mt-4">
-              <CardHeader>
-                <CardTitle className="text-sm">Color Preview</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div>
-                    <Label className="text-xs text-slate-600">Background Colors</Label>
-                    <div className="flex gap-1 mt-1">
-                      {backgroundColors.map((color) => (
-                        <div
-                          key={color}
-                          className="w-6 h-6 rounded border border-slate-300"
-                          style={{ backgroundColor: color }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <Label className="text-xs text-slate-600">Foreground Colors</Label>
-                    <div className="flex gap-1 mt-1">
-                      {foregroundColors.map((color) => (
-                        <div
-                          key={color}
-                          className="w-6 h-6 rounded border border-slate-300"
-                          style={{ backgroundColor: color }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="lg:col-span-2">
+    <div className="h-screen bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
+      <div className="h-full max-w-7xl mx-auto p-6">
+        <div className="flex flex-col lg:flex-row-reverse gap-6 lg:gap-8 h-full">
+          <div className="flex-shrink-0 lg:flex-shrink-0">
             <Card>
               <CardHeader>
                 <CardTitle>Generated Graeco-Latin Square</CardTitle>
@@ -330,33 +167,159 @@ export default function GraecoLatinGenerator() {
                 </div>
               </CardContent>
             </Card>
+          </div>
 
-            <Card className="mt-4">
-              <CardHeader>
-                <CardTitle className="text-sm">Mathematical Construction</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-slate-600">
-                <div className="space-y-2">
-                  <p>
-                    <strong>Latin Square:</strong> L(i,j) = (i + {latinMultiplier}j) mod {size}
-                  </p>
-                  <p>
-                    <strong>Greek Square:</strong> G(i,j) = (i + {greekMultiplier}j) mod {size}
-                  </p>
-                  <p>
-                    Each cell shows the unique combination (L(i,j), G(i,j)) as (background,
-                    foreground) colors.
-                  </p>
-                  <p>
-                    This construction ensures orthogonality: every color pair appears exactly once.
-                  </p>
-                  <p>
-                    <strong>Note:</strong> Multipliers must satisfy gcd(|{greekMultiplier}-
-                    {latinMultiplier}|, {size}) = 1 to ensure proper orthogonality.
-                  </p>
+          <div className="flex-1 overflow-hidden">
+            <ScrollArea className="h-full">
+              <div className="space-y-6 pr-4 pb-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                    <Palette className="w-5 h-5" />
+                    Controls
+                  </h3>
+                  <div className="space-y-6">
+                    <div>
+                      <Label htmlFor="size">Grid Size (n)</Label>
+                      <Select
+                        value={size.toString()}
+                        onValueChange={(value) => handleSizeChange(Number.parseInt(value, 10))}
+                      >
+                        <SelectTrigger className="bg-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="3">3×3</SelectItem>
+                          <SelectItem value="5">5×5</SelectItem>
+                          <SelectItem value="7">7×7</SelectItem>
+                          <SelectItem value="9">9×9</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="latinMultiplier">Latin Square Multiplier</Label>
+                      <Select
+                        value={latinMultiplier.toString()}
+                        onValueChange={(value) => setLatinMultiplier(Number.parseInt(value, 10))}
+                      >
+                        <SelectTrigger className="bg-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {getAvailableMultipliers(greekMultiplier, false).map((multiplier) => (
+                            <SelectItem key={multiplier} value={multiplier.toString()}>
+                              {multiplier}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-slate-500 mt-1">Must satisfy gcd(|b-a|, n) = 1</p>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="greekMultiplier">Greek Square Multiplier</Label>
+                      <Select
+                        value={greekMultiplier.toString()}
+                        onValueChange={(value) => setGreekMultiplier(Number.parseInt(value, 10))}
+                      >
+                        <SelectTrigger className="bg-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {getAvailableMultipliers(latinMultiplier, true).map((multiplier) => (
+                            <SelectItem key={multiplier} value={multiplier.toString()}>
+                              {multiplier}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-slate-500 mt-1">Must satisfy gcd(|b-a|, n) = 1</p>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="palette">Color Palette</Label>
+                      <Select
+                        value={paletteType}
+                        onValueChange={(value: "colored" | "grayscale") => setPaletteType(value)}
+                      >
+                        <SelectTrigger className="bg-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="colored">Colored</SelectItem>
+                          <SelectItem value="grayscale">Grayscale</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div>
+                      <Label>Background Shift: {backgroundShift}</Label>
+                      <Slider
+                        value={[backgroundShift]}
+                        onValueChange={(value) => setBackgroundShift(value[0])}
+                        max={size - 1}
+                        step={1}
+                        className="mt-2"
+                      />
+                    </div>
+
+                    <div>
+                      <Label>Foreground Shift: {foregroundShift}</Label>
+                      <Slider
+                        value={[foregroundShift]}
+                        onValueChange={(value) => setForegroundShift(value[0])}
+                        max={size - 1}
+                        step={1}
+                        className="mt-2"
+                      />
+                    </div>
+
+                    <div>
+                      <h4 className="text-sm font-medium text-slate-700 mb-3">Color Preview</h4>
+                      <div>
+                        <div className="space-y-3">
+                          <div>
+                            <Label className="text-xs text-slate-600">Background Colors</Label>
+                            <div className="flex gap-1 mt-1">
+                              {backgroundColors.map((color) => (
+                                <div
+                                  key={color}
+                                  className="w-6 h-6 rounded border border-slate-300"
+                                  style={{ backgroundColor: color }}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            <Label className="text-xs text-slate-600">Foreground Colors</Label>
+                            <div className="flex gap-1 mt-1">
+                              {foregroundColors.map((color) => (
+                                <div
+                                  key={color}
+                                  className="w-6 h-6 rounded border border-slate-300"
+                                  style={{ backgroundColor: color }}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 space-y-2">
+                      <Button onClick={downloadSVG} className="w-full bg-white" variant="outline">
+                        <Download className="w-4 h-4 mr-2" />
+                        Download SVG
+                      </Button>
+                      <Button onClick={downloadPNG} className="w-full bg-white" variant="outline">
+                        <Download className="w-4 h-4 mr-2" />
+                        Download PNG
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </ScrollArea>
           </div>
         </div>
       </div>
