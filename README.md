@@ -1,69 +1,34 @@
-# React + TypeScript + Vite
+# Graeco-Latin Square Art Generator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Generate beautiful geometric art using orthogonal Latin squares. Each cell contains a unique combination of background and foreground colors arranged in mathematical harmony.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Mathematical Construction**: Based on Graeco-Latin squares with orthogonal Latin multipliers
+- **Interactive Controls**: Adjust grid size (3×3, 5×5, 7×7, 9×9), multipliers, and color palettes
+- **Color Palettes**: Choose between vibrant colored or grayscale palettes
+- **Color Shifting**: Rotate background and foreground color assignments
+- **Export Options**: Download generated art as SVG or PNG
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 + TypeScript
+- Vite + TailwindCSS
+- shadcn/ui components
+- Zustand state management
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Mathematical Background
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+A Graeco-Latin square is a mathematical arrangement where each cell contains a unique ordered pair (Latin symbol, Greek symbol). This implementation uses the construction:
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Latin Square**: L(i,j) = (i + a·j) mod n
+- **Greek Square**: G(i,j) = (i + b·j) mod n
+
+Where n is odd and the multipliers a and b satisfy gcd(|b-a|, n) = 1.
