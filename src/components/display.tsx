@@ -23,53 +23,56 @@ export default function Display() {
   const svgSize = size * cellSize
 
   return (
-    <div className="flex-shrink-0 lg:flex-shrink-0">
+    <div className="w-full max-w-full lg:max-w-lg xl:max-w-xl">
       <Card>
         <CardHeader>
           <CardTitle>Generated Graeco-Latin Square</CardTitle>
         </CardHeader>
-        <CardContent className="flex justify-center">
-          <div className="bg-white p-4 rounded-lg shadow-inner">
-            <svg
-              ref={svgRef}
-              width={svgSize}
-              height={svgSize}
-              viewBox={`0 0 ${svgSize} ${svgSize}`}
-              className="border border-slate-200"
-            >
-              {square.latin.map((row, i) =>
-                row.map((latinValue, j) => {
-                  const greekValue = square.greek[i][j]
-                  const x = j * cellSize
-                  const y = i * cellSize
-                  const innerX = x + (cellSize - innerSize) / 2
-                  const innerY = y + (cellSize - innerSize) / 2
+        <CardContent className="flex justify-center p-2 sm:p-4">
+          <div className="bg-white p-2 sm:p-4 rounded-lg shadow-inner w-full max-w-full overflow-hidden">
+            <div className="w-full max-w-sm sm:max-w-md lg:max-w-full aspect-square mx-auto">
+              <svg
+                ref={svgRef}
+                width="100%"
+                height="100%"
+                viewBox={`0 0 ${svgSize} ${svgSize}`}
+                className="border border-slate-200 w-full h-full"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                {square.latin.map((row, i) =>
+                  row.map((latinValue, j) => {
+                    const greekValue = square.greek[i][j]
+                    const x = j * cellSize
+                    const y = i * cellSize
+                    const innerX = x + (cellSize - innerSize) / 2
+                    const innerY = y + (cellSize - innerSize) / 2
 
-                  return (
-                    <g key={`${latinValue}-${greekValue}`}>
-                      <rect
-                        x={x}
-                        y={y}
-                        width={cellSize}
-                        height={cellSize}
-                        fill={backgroundColors[latinValue]}
-                        stroke="#ffffff"
-                        strokeWidth="1"
-                      />
-                      <rect
-                        x={innerX}
-                        y={innerY}
-                        width={innerSize}
-                        height={innerSize}
-                        fill={foregroundColors[greekValue]}
-                        stroke="#ffffff"
-                        strokeWidth="0.5"
-                      />
-                    </g>
-                  )
-                })
-              )}
-            </svg>
+                    return (
+                      <g key={`${latinValue}-${greekValue}`}>
+                        <rect
+                          x={x}
+                          y={y}
+                          width={cellSize}
+                          height={cellSize}
+                          fill={backgroundColors[latinValue]}
+                          stroke="#ffffff"
+                          strokeWidth="1"
+                        />
+                        <rect
+                          x={innerX}
+                          y={innerY}
+                          width={innerSize}
+                          height={innerSize}
+                          fill={foregroundColors[greekValue]}
+                          stroke="#ffffff"
+                          strokeWidth="0.5"
+                        />
+                      </g>
+                    )
+                  })
+                )}
+              </svg>
+            </div>
           </div>
         </CardContent>
       </Card>
