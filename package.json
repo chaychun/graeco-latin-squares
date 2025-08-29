@@ -10,7 +10,9 @@
     "lint:fix": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:ui": "vitest"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.7",
@@ -37,6 +39,7 @@
     "tailwindcss": "^4.1.12",
     "tw-animate-css": "^1.3.7",
     "typescript": "~5.8.3",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "vitest": "^3.2.4"
   }
 }

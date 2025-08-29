@@ -13,6 +13,8 @@ export function getAllMultipliers(n: number): number[] {
 
 export function areMultipliersValid(a: number, b: number, n: number): boolean {
   if (a === b) return false
+  if (gcd(a, n) !== 1) return false
+  if (gcd(b, n) !== 1) return false
   return gcd(Math.abs(b - a), n) === 1
 }
 
