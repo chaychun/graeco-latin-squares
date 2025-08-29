@@ -26,18 +26,21 @@ export default function Controls() {
     foregroundShift,
     latinMultiplier,
     greekMultiplier,
+    method,
     setSize,
     setPaletteType,
     setBackgroundShift,
     setForegroundShift,
     setLatinMultiplier,
     setGreekMultiplier,
+    setMethod,
   } = useGraecoLatinStore()
 
   const availableMultipliers = getAllMultipliers(size)
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
+    if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
     const newMultipliers = getAllMultipliers(newSize)
     if (!newMultipliers.includes(latinMultiplier)) {
       setLatinMultiplier(newMultipliers[0] || 1)
@@ -92,12 +95,35 @@ export default function Controls() {
                   <SelectItem value="4">4×4</SelectItem>
                   <SelectItem value="5">5×5</SelectItem>
                   <SelectItem value="7">7×7</SelectItem>
+                  <SelectItem value="8">8×8</SelectItem>
                   <SelectItem value="9">9×9</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            {size !== 4 && (
+            <div>
+              <Label htmlFor="method">Construction Method</Label>
+              <Select
+                value={method}
+                onValueChange={(value: "auto" | "finite" | "cyclic" | "klein4") => setMethod(value)}
+              >
+                <SelectTrigger className="bg-white mt-2">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="auto">Auto</SelectItem>
+                  <SelectItem value="finite">Finite Field</SelectItem>
+                  <SelectItem value="cyclic" disabled={size % 2 === 0}>
+                    Cyclic
+                  </SelectItem>
+                  <SelectItem value="klein4" disabled={size !== 4}>
+                    Klein 4 (4×4)
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {method === "cyclic" && (
               <div>
                 <Label htmlFor="latinMultiplier">Latin Square Multiplier</Label>
                 <Select
@@ -118,7 +144,7 @@ export default function Controls() {
               </div>
             )}
 
-            {size !== 4 && (
+            {method === "cyclic" && (
               <div>
                 <Label htmlFor="greekMultiplier">Greek Square Multiplier</Label>
                 <Select
