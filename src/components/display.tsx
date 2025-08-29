@@ -37,10 +37,10 @@ export default function Display() {
   } else if (method === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
     if (ff) square = ff
+    else if (size === 4) square = generateKlein4GraecoLatin()
     else if (size % 2 !== 0)
       square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
-    else if (size === 4) square = generateKlein4GraecoLatin()
-    else square = generateFiniteFieldGraecoLatin(size)!
+    else square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
   } else if (method === "cyclic") {
     square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
   } else {

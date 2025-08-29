@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { primePowerDecomposition } from "@/lib/finite-field"
 import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
@@ -37,10 +38,13 @@ export default function Controls() {
   } = useGraecoLatinStore()
 
   const availableMultipliers = getAllMultipliers(size)
+  const isPrimePower = !!primePowerDecomposition(size)
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
     if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
+    if (newSize !== 4 && method === "klein4") setMethod("auto")
+    if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
     const newMultipliers = getAllMultipliers(newSize)
     if (!newMultipliers.includes(latinMultiplier)) {
       setLatinMultiplier(newMultipliers[0] || 1)
@@ -105,14 +109,18 @@ export default function Controls() {
               <Label htmlFor="method">Construction Method</Label>
               <Select
                 value={method}
-                onValueChange={(value: "auto" | "finite" | "cyclic" | "klein4") => setMethod(value)}
+                onValueChange={(value) =>
+                  setMethod(value as "auto" | "finite" | "cyclic" | "klein4")
+                }
               >
                 <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="auto">Auto</SelectItem>
-                  <SelectItem value="finite">Finite Field</SelectItem>
+                  <SelectItem value="finite" disabled={!isPrimePower}>
+                    Finite Field
+                  </SelectItem>
                   <SelectItem value="cyclic" disabled={size % 2 === 0}>
                     Cyclic
                   </SelectItem>
@@ -169,8 +177,8 @@ export default function Controls() {
               <Label htmlFor="palette">Color Palette</Label>
               <Select
                 value={paletteType}
-                onValueChange={(value: "pastel" | "grayscale" | "scientific_american_59") =>
-                  setPaletteType(value)
+                onValueChange={(value) =>
+                  setPaletteType(value as "pastel" | "grayscale" | "scientific_american_59")
                 }
               >
                 <SelectTrigger className="bg-white mt-2">
