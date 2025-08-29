@@ -161,7 +161,7 @@ describe("generateKlein4GraecoLatin", () => {
   })
 })
 
-describe("generateFiniteFieldGraecoLatin and Auto", () => {
+describe("generateFiniteFieldGraecoLatin", () => {
   const sizes = [3, 4, 5, 7, 8, 9]
   it("produces Latin/orthogonal for prime powers via finite field", () => {
     const failures: number[] = []
@@ -188,24 +188,9 @@ describe("generateFiniteFieldGraecoLatin and Auto", () => {
       if (isPrimePower) {
         if (!ff) failures.push(n)
         else {
-          // eslint-disable-next-line no-console
-          console.log(
-            `FF n=${n} latinRow0=${ff.latin[0].slice(0, Math.min(8, ff.latin[0].length))} greekRow0=${ff.greek[0].slice(0, Math.min(8, ff.greek[0].length))}`
-          )
-          // Check column uniqueness for added context
-          const col0 = ff.latin.map((row) => row[0])
-          const col1 = ff.latin.map((row) => row[1])
-          // eslint-disable-next-line no-console
-          console.log(`FF n=${n} latinCol0=${col0} latinCol1=${col1}`)
           const latinOk = isLatinSquare(ff.latin)
           const greekOk = isLatinSquare(ff.greek)
           const orthoOk = arePairsOrthogonal(ff.latin, ff.greek)
-          if (!latinOk || !greekOk || !orthoOk) {
-            // eslint-disable-next-line no-console
-            console.error(
-              `FF failure for n=${n}: latinOk=${latinOk} greekOk=${greekOk} orthoOk=${orthoOk}`
-            )
-          }
           expect(latinOk).toBe(true)
           expect(greekOk).toBe(true)
           expect(orthoOk).toBe(true)
@@ -216,21 +201,25 @@ describe("generateFiniteFieldGraecoLatin and Auto", () => {
     }
     expect(failures).toHaveLength(0)
   })
+})
 
-  it("auto prefers finite-field when available, falls back otherwise", () => {
+describe("generateGraecoLatinAuto selection", () => {
+  it("uses cyclic for prime odd (k=1) sizes", () => {
     const auto3 = generateGraecoLatinAuto(3)
-    expect(isLatinSquare(auto3.latin)).toBe(true)
-    expect(isLatinSquare(auto3.greek)).toBe(true)
-    expect(arePairsOrthogonal(auto3.latin, auto3.greek)).toBe(true)
+    const cyc3 = generateCyclicGraecoLatin(3)
+    expect(auto3).toEqual(cyc3)
+  })
 
+  it("uses finite-field for prime-power k>1", () => {
     const auto9 = generateGraecoLatinAuto(9)
-    expect(isLatinSquare(auto9.latin)).toBe(true)
-    expect(isLatinSquare(auto9.greek)).toBe(true)
-    expect(arePairsOrthogonal(auto9.latin, auto9.greek)).toBe(true)
+    const ff9 = generateFiniteFieldGraecoLatin(9)
+    expect(ff9).not.toBeNull()
+    expect(auto9).toEqual(ff9)
+  })
 
+  it("falls back to cyclic for odd non-prime-power", () => {
     const auto15 = generateGraecoLatinAuto(15)
-    expect(isLatinSquare(auto15.latin)).toBe(true)
-    expect(isLatinSquare(auto15.greek)).toBe(true)
-    expect(arePairsOrthogonal(auto15.latin, auto15.greek)).toBe(true)
+    const cyc15 = generateCyclicGraecoLatin(15)
+    expect(auto15).toEqual(cyc15)
   })
 })
