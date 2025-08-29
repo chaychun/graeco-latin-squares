@@ -3,7 +3,13 @@ import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { downloadPNG, downloadSVG } from "@/lib/downloads"
-import { generateGraecoLatinSquare, generateKlein4GraecoLatin } from "@/lib/graeco-latin"
+import {
+  type GraecoLatinSquare,
+  generateCyclicGraecoLatin,
+  generateFiniteFieldGraecoLatin,
+  generateGraecoLatinAuto,
+  generateKlein4GraecoLatin,
+} from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -13,15 +19,33 @@ import {
 import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Display() {
-  const { size, paletteType, backgroundShift, foregroundShift, latinMultiplier, greekMultiplier } =
-    useGraecoLatinStore()
+  const {
+    size,
+    paletteType,
+    backgroundShift,
+    foregroundShift,
+    latinMultiplier,
+    greekMultiplier,
+    method,
+  } = useGraecoLatinStore()
 
   const svgRef = useRef<SVGSVGElement>(null)
 
-  const square =
-    size === 4
-      ? generateKlein4GraecoLatin()
-      : generateGraecoLatinSquare(size, latinMultiplier, greekMultiplier)
+  let square: GraecoLatinSquare
+  if (method === "klein4" && size === 4) {
+    square = generateKlein4GraecoLatin()
+  } else if (method === "finite") {
+    const ff = generateFiniteFieldGraecoLatin(size)
+    if (ff) square = ff
+    else if (size === 4) square = generateKlein4GraecoLatin()
+    else if (size % 2 !== 0)
+      square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
+    else square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+  } else if (method === "cyclic") {
+    square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
+  } else {
+    square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+  }
   const basePalette =
     paletteType === "pastel"
       ? PASTEL_PALETTE

@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { primePowerDecomposition } from "@/lib/finite-field"
 import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
@@ -26,18 +27,24 @@ export default function Controls() {
     foregroundShift,
     latinMultiplier,
     greekMultiplier,
+    method,
     setSize,
     setPaletteType,
     setBackgroundShift,
     setForegroundShift,
     setLatinMultiplier,
     setGreekMultiplier,
+    setMethod,
   } = useGraecoLatinStore()
 
   const availableMultipliers = getAllMultipliers(size)
+  const isPrimePower = !!primePowerDecomposition(size)
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
+    if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
+    if (newSize !== 4 && method === "klein4") setMethod("auto")
+    if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
     const newMultipliers = getAllMultipliers(newSize)
     if (!newMultipliers.includes(latinMultiplier)) {
       setLatinMultiplier(newMultipliers[0] || 1)
@@ -92,12 +99,39 @@ export default function Controls() {
                   <SelectItem value="4">4×4</SelectItem>
                   <SelectItem value="5">5×5</SelectItem>
                   <SelectItem value="7">7×7</SelectItem>
+                  <SelectItem value="8">8×8</SelectItem>
                   <SelectItem value="9">9×9</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            {size !== 4 && (
+            <div>
+              <Label htmlFor="method">Construction Method</Label>
+              <Select
+                value={method}
+                onValueChange={(value) =>
+                  setMethod(value as "auto" | "finite" | "cyclic" | "klein4")
+                }
+              >
+                <SelectTrigger className="bg-white mt-2">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="auto">Auto</SelectItem>
+                  <SelectItem value="finite" disabled={!isPrimePower}>
+                    Finite Field
+                  </SelectItem>
+                  <SelectItem value="cyclic" disabled={size % 2 === 0}>
+                    Cyclic
+                  </SelectItem>
+                  <SelectItem value="klein4" disabled={size !== 4}>
+                    Klein 4 (4×4)
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {method === "cyclic" && (
               <div>
                 <Label htmlFor="latinMultiplier">Latin Square Multiplier</Label>
                 <Select
@@ -118,7 +152,7 @@ export default function Controls() {
               </div>
             )}
 
-            {size !== 4 && (
+            {method === "cyclic" && (
               <div>
                 <Label htmlFor="greekMultiplier">Greek Square Multiplier</Label>
                 <Select
@@ -143,8 +177,8 @@ export default function Controls() {
               <Label htmlFor="palette">Color Palette</Label>
               <Select
                 value={paletteType}
-                onValueChange={(value: "pastel" | "grayscale" | "scientific_american_59") =>
-                  setPaletteType(value)
+                onValueChange={(value) =>
+                  setPaletteType(value as "pastel" | "grayscale" | "scientific_american_59")
                 }
               >
                 <SelectTrigger className="bg-white mt-2">
