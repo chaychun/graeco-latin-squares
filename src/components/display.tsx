@@ -52,8 +52,8 @@ export default function Display() {
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
         : SCIENTIFIC_AMERICAN_59_PALETTE
-  const backgroundColors = shiftPalette(basePalette.slice(0, size), backgroundShift)
-  const foregroundColors = shiftPalette(basePalette.slice(0, size), foregroundShift)
+  const backgroundColors = shiftPalette(basePalette, backgroundShift).slice(0, size)
+  const foregroundColors = shiftPalette(basePalette, foregroundShift).slice(0, size)
 
   const cellSize = 60
   const innerSize = cellSize * 0.4

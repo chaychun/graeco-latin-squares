@@ -73,8 +73,8 @@ export default function Controls() {
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
         : SCIENTIFIC_AMERICAN_59_PALETTE
-  const backgroundColors = shiftPalette(basePalette.slice(0, size), backgroundShift)
-  const foregroundColors = shiftPalette(basePalette.slice(0, size), foregroundShift)
+  const backgroundColors = shiftPalette(basePalette, backgroundShift).slice(0, size)
+  const foregroundColors = shiftPalette(basePalette, foregroundShift).slice(0, size)
 
   return (
     <ScrollArea className="h-full">
@@ -197,7 +197,7 @@ export default function Controls() {
               <Slider
                 value={[backgroundShift]}
                 onValueChange={(value) => setBackgroundShift(value[0])}
-                max={size - 1}
+                max={basePalette.length - 1}
                 step={1}
                 className="mt-2"
               />
@@ -208,7 +208,7 @@ export default function Controls() {
               <Slider
                 value={[foregroundShift]}
                 onValueChange={(value) => setForegroundShift(value[0])}
-                max={size - 1}
+                max={basePalette.length - 1}
                 step={1}
                 className="mt-2"
               />
