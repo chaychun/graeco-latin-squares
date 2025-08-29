@@ -46,3 +46,32 @@ export function generateGraecoLatinSquare(
 
   return { latin, greek }
 }
+
+export function generateKlein4GraecoLatin(
+  M?: [[number, number], [number, number]]
+): GraecoLatinSquare {
+  const matrix = M ?? [
+    [0, 1],
+    [1, 1],
+  ]
+  const applyM = (v: number) => {
+    const x = v & 1
+    const y = (v >> 1) & 1
+    const xPrime = (matrix[0][0] * x + matrix[0][1] * y) & 1
+    const yPrime = (matrix[1][0] * x + matrix[1][1] * y) & 1
+    return (yPrime << 1) | xPrime
+  }
+  const size = 4
+  const latin: number[][] = []
+  const greek: number[][] = []
+  for (let r = 0; r < size; r++) {
+    latin[r] = []
+    greek[r] = []
+    for (let c = 0; c < size; c++) {
+      const mxc = applyM(c)
+      latin[r][c] = r ^ c
+      greek[r][c] = r ^ mxc
+    }
+  }
+  return { latin, greek }
+}

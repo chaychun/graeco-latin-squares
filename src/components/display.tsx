@@ -3,7 +3,7 @@ import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { downloadPNG, downloadSVG } from "@/lib/downloads"
-import { generateGraecoLatinSquare } from "@/lib/graeco-latin"
+import { generateGraecoLatinSquare, generateKlein4GraecoLatin } from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -18,7 +18,10 @@ export default function Display() {
 
   const svgRef = useRef<SVGSVGElement>(null)
 
-  const square = generateGraecoLatinSquare(size, latinMultiplier, greekMultiplier)
+  const square =
+    size === 4
+      ? generateKlein4GraecoLatin()
+      : generateGraecoLatinSquare(size, latinMultiplier, greekMultiplier)
   const basePalette =
     paletteType === "pastel"
       ? PASTEL_PALETTE

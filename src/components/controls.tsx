@@ -89,6 +89,7 @@ export default function Controls() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="3">3×3</SelectItem>
+                  <SelectItem value="4">4×4</SelectItem>
                   <SelectItem value="5">5×5</SelectItem>
                   <SelectItem value="7">7×7</SelectItem>
                   <SelectItem value="9">9×9</SelectItem>
@@ -96,43 +97,47 @@ export default function Controls() {
               </Select>
             </div>
 
-            <div>
-              <Label htmlFor="latinMultiplier">Latin Square Multiplier</Label>
-              <Select
-                value={latinMultiplier.toString()}
-                onValueChange={(value) => setLatinMultiplier(Number.parseInt(value, 10))}
-              >
-                <SelectTrigger className="bg-white mt-2">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {getAvailableMultipliers(greekMultiplier, false).map((multiplier) => (
-                    <SelectItem key={multiplier} value={multiplier.toString()}>
-                      {multiplier}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            {size !== 4 && (
+              <div>
+                <Label htmlFor="latinMultiplier">Latin Square Multiplier</Label>
+                <Select
+                  value={latinMultiplier.toString()}
+                  onValueChange={(value) => setLatinMultiplier(Number.parseInt(value, 10))}
+                >
+                  <SelectTrigger className="bg-white mt-2">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getAvailableMultipliers(greekMultiplier, false).map((multiplier) => (
+                      <SelectItem key={multiplier} value={multiplier.toString()}>
+                        {multiplier}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
-            <div>
-              <Label htmlFor="greekMultiplier">Greek Square Multiplier</Label>
-              <Select
-                value={greekMultiplier.toString()}
-                onValueChange={(value) => setGreekMultiplier(Number.parseInt(value, 10))}
-              >
-                <SelectTrigger className="bg-white mt-2">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {getAvailableMultipliers(latinMultiplier, true).map((multiplier) => (
-                    <SelectItem key={multiplier} value={multiplier.toString()}>
-                      {multiplier}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            {size !== 4 && (
+              <div>
+                <Label htmlFor="greekMultiplier">Greek Square Multiplier</Label>
+                <Select
+                  value={greekMultiplier.toString()}
+                  onValueChange={(value) => setGreekMultiplier(Number.parseInt(value, 10))}
+                >
+                  <SelectTrigger className="bg-white mt-2">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {getAvailableMultipliers(latinMultiplier, true).map((multiplier) => (
+                      <SelectItem key={multiplier} value={multiplier.toString()}>
+                        {multiplier}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
             <div>
               <Label htmlFor="palette">Color Palette</Label>

@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest"
-import { areMultipliersValid, generateGraecoLatinSquare, getAllMultipliers } from "./graeco-latin"
+import {
+  areMultipliersValid,
+  generateGraecoLatinSquare,
+  generateKlein4GraecoLatin,
+  getAllMultipliers,
+} from "./graeco-latin"
 
 const isLatinSquare = (matrix: number[][]) => {
   const n = matrix.length
@@ -97,5 +102,54 @@ describe("generateGraecoLatinSquare", () => {
       console.error("Invalid-multiplier unexpected passes:", unexpectedPasses)
     }
     expect(unexpectedPasses).toHaveLength(0)
+  })
+})
+
+describe("generateKlein4GraecoLatin", () => {
+  it("produces 4x4 Latin squares and orthogonal pairs for default M", () => {
+    const { latin, greek } = generateKlein4GraecoLatin()
+    expect(latin.length).toBe(4)
+    expect(greek.length).toBe(4)
+    expect(isLatinSquare(latin)).toBe(true)
+    expect(isLatinSquare(greek)).toBe(true)
+    expect(arePairsOrthogonal(latin, greek)).toBe(true)
+  })
+
+  it("matches the explicit example pairs for M=[[0,1],[1,1]] up to labels", () => {
+    const { latin, greek } = generateKlein4GraecoLatin([
+      [0, 1],
+      [1, 1],
+    ])
+    const expectedPairs = [
+      [
+        [0, 0],
+        [1, 2],
+        [2, 3],
+        [3, 1],
+      ],
+      [
+        [1, 1],
+        [0, 3],
+        [3, 2],
+        [2, 0],
+      ],
+      [
+        [2, 2],
+        [3, 0],
+        [0, 1],
+        [1, 3],
+      ],
+      [
+        [3, 3],
+        [2, 1],
+        [1, 0],
+        [0, 2],
+      ],
+    ]
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        expect([latin[i][j], greek[i][j]]).toEqual(expectedPairs[i][j])
+      }
+    }
   })
 })
