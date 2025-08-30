@@ -13,11 +13,8 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { primePowerDecomposition } from "@/lib/finite-field"
-import {
-  areMultipliersValid,
-  getAllMultipliers,
-  isMethodOfDifferenceSupported,
-} from "@/lib/graeco-latin"
+import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
+import { isMethodValid, validateMethod } from "@/lib/method-validation"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -56,11 +53,8 @@ export default function Controls() {
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
-    const diffValid = isMethodOfDifferenceSupported(newSize)
-    if (method === "difference" && !diffValid) setMethod("auto")
-    if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
-    if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
-    if (newSize !== 12 && method === "direct") setMethod("auto")
+    const adjusted = validateMethod(method, newSize)
+    if (adjusted !== method) setMethod(adjusted)
     const newMultipliers = getAllMultipliers(newSize)
     if (!newMultipliers.includes(latinMultiplier)) {
       setLatinMultiplier(newMultipliers[0] || 1)
@@ -185,16 +179,16 @@ export default function Controls() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="auto">Auto</SelectItem>
-                  <SelectItem value="finite" disabled={!isPrimePower}>
+                  <SelectItem value="finite" disabled={!isMethodValid("finite", size)}>
                     Finite Field
                   </SelectItem>
-                  <SelectItem value="cyclic" disabled={size % 2 === 0}>
+                  <SelectItem value="cyclic" disabled={!isMethodValid("cyclic", size)}>
                     Cyclic
                   </SelectItem>
-                  <SelectItem value="difference" disabled={!isMethodOfDifferenceSupported(size)}>
+                  <SelectItem value="difference" disabled={!isMethodValid("difference", size)}>
                     Method of Difference
                   </SelectItem>
-                  <SelectItem value="direct" disabled={size !== 12}>
+                  <SelectItem value="direct" disabled={!isMethodValid("direct", size)}>
                     Direct Product
                   </SelectItem>
                 </SelectContent>

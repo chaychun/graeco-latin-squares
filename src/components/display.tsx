@@ -10,8 +10,8 @@ import {
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
   generateMethodOfDifferenceGraecoLatin,
-  isMethodOfDifferenceSupported,
 } from "@/lib/graeco-latin"
+import { isMethodValid } from "@/lib/method-validation"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -39,7 +39,7 @@ export default function Display() {
   let square: GraecoLatinSquare
   if (method === "difference") {
     const m = (size - 1) / 3
-    if (isMethodOfDifferenceSupported(size)) {
+    if (isMethodValid("difference", size)) {
       square = generateMethodOfDifferenceGraecoLatin(m)
     } else {
       square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
