@@ -89,9 +89,10 @@ export default function Controls() {
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
         : SCIENTIFIC_AMERICAN_59_PALETTE
-  const shuffled = shufflePalette(basePalette, paletteSeed)
-  const backgroundColors = shiftPalette(shuffled, backgroundShift).slice(0, size)
-  const foregroundColors = shiftPalette(shuffled, foregroundShift).slice(0, size)
+  const effectivePalette =
+    paletteSeed === 0 ? basePalette : shufflePalette(basePalette, paletteSeed)
+  const backgroundColors = shiftPalette(effectivePalette, backgroundShift).slice(0, size)
+  const foregroundColors = shiftPalette(effectivePalette, foregroundShift).slice(0, size)
 
   const randomizePalette = () => {
     const seed = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
