@@ -7,14 +7,14 @@ interface GraecoLatinState {
   foregroundShift: number
   latinMultiplier: number
   greekMultiplier: number
-  method: "auto" | "finite" | "cyclic" | "klein4"
+  method: "auto" | "finite" | "cyclic" | "klein4" | "difference"
   setSize: (size: number) => void
   setPaletteType: (paletteType: "pastel" | "grayscale" | "scientific_american_59") => void
   setBackgroundShift: (shift: number) => void
   setForegroundShift: (shift: number) => void
   setLatinMultiplier: (multiplier: number) => void
   setGreekMultiplier: (multiplier: number) => void
-  setMethod: (method: "auto" | "finite" | "cyclic" | "klein4") => void
+  setMethod: (method: "auto" | "finite" | "cyclic" | "klein4" | "difference") => void
 }
 
 export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
@@ -32,5 +32,5 @@ export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
   setForegroundShift: (foregroundShift: number) => set({ foregroundShift }),
   setLatinMultiplier: (latinMultiplier: number) => set({ latinMultiplier }),
   setGreekMultiplier: (greekMultiplier: number) => set({ greekMultiplier }),
-  setMethod: (method: "auto" | "finite" | "cyclic" | "klein4") => set({ method }),
+  setMethod: (method: "auto" | "finite" | "cyclic" | "klein4" | "difference") => set({ method }),
 }))

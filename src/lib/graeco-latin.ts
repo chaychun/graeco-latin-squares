@@ -166,6 +166,7 @@ export function generateGraecoLatinAuto(
 ): GraecoLatinSquare {
   const dec = primePowerDecomposition(n)
   if (n % 2 === 0) {
+    if (n === 10) return generateMethodOfDifferenceGraecoLatin(3)
     const ffEven = generateFiniteFieldGraecoLatin(n, opts?.matrix)
     if (ffEven) return ffEven
     throw new Error("No valid construction for even size without finite field support")

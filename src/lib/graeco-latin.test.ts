@@ -295,4 +295,10 @@ describe("generateGraecoLatinAuto selection", () => {
     const cyc15 = generateCyclicGraecoLatin(15)
     expect(auto15).toEqual(cyc15)
   })
+
+  it("uses method-of-difference for n=10", () => {
+    const auto10 = generateGraecoLatinAuto(10)
+    const diff10 = generateMethodOfDifferenceGraecoLatin(3)
+    expect(auto10).toEqual(diff10)
+  })
 })

@@ -42,9 +42,13 @@ export default function Controls() {
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
-    if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
-    if (newSize !== 4 && method === "klein4") setMethod("auto")
-    if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
+    if (newSize === 10) setMethod("difference")
+    else {
+      if (method === "difference") setMethod("auto")
+      if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
+      if (newSize !== 4 && method === "klein4") setMethod("auto")
+      if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
+    }
     const newMultipliers = getAllMultipliers(newSize)
     if (!newMultipliers.includes(latinMultiplier)) {
       setLatinMultiplier(newMultipliers[0] || 1)
@@ -101,6 +105,7 @@ export default function Controls() {
                   <SelectItem value="7">7×7</SelectItem>
                   <SelectItem value="8">8×8</SelectItem>
                   <SelectItem value="9">9×9</SelectItem>
+                  <SelectItem value="10">10×10</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -110,22 +115,27 @@ export default function Controls() {
               <Select
                 value={method}
                 onValueChange={(value) =>
-                  setMethod(value as "auto" | "finite" | "cyclic" | "klein4")
+                  setMethod(value as "auto" | "finite" | "cyclic" | "klein4" | "difference")
                 }
               >
                 <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="auto">Auto</SelectItem>
-                  <SelectItem value="finite" disabled={!isPrimePower}>
+                  <SelectItem value="auto" disabled={size === 10}>
+                    Auto
+                  </SelectItem>
+                  <SelectItem value="finite" disabled={!isPrimePower || size === 10}>
                     Finite Field
                   </SelectItem>
-                  <SelectItem value="cyclic" disabled={size % 2 === 0}>
+                  <SelectItem value="cyclic" disabled={size % 2 === 0 || size === 10}>
                     Cyclic
                   </SelectItem>
                   <SelectItem value="klein4" disabled={size !== 4}>
                     Klein 4 (4×4)
+                  </SelectItem>
+                  <SelectItem value="difference" disabled={size !== 10}>
+                    Method of Difference (10×10)
                   </SelectItem>
                 </SelectContent>
               </Select>
