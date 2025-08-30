@@ -5,6 +5,7 @@ import {
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
   generateKlein4GraecoLatin,
+  generateMethodOfDifferenceGraecoLatin,
   getAllMultipliers,
 } from "./graeco-latin"
 
@@ -109,6 +110,78 @@ describe("generateCyclicGraecoLatin", () => {
   it("throws for even sizes", () => {
     expect(() => generateCyclicGraecoLatin(4, 1, 3)).toThrow()
     expect(() => generateCyclicGraecoLatin(8, 1, 3)).toThrow()
+  })
+})
+
+describe("generateMethodOfDifferenceGraecoLatin", () => {
+  it("produces Latin/orthogonal for odd m", () => {
+    const ms = [1, 3, 5]
+    for (const m of ms) {
+      const { latin, greek } = generateMethodOfDifferenceGraecoLatin(m)
+      expect(latin.length).toBe(3 * m + 1)
+      expect(greek.length).toBe(3 * m + 1)
+      expect(isLatinSquare(latin)).toBe(true)
+      expect(isLatinSquare(greek)).toBe(true)
+      expect(arePairsOrthogonal(latin, greek)).toBe(true)
+    }
+  })
+
+  it("matches the 10x10 pair from the paper for m=3", () => {
+    const { latin, greek } = generateMethodOfDifferenceGraecoLatin(3)
+    const A = [
+      [0, 6, 5, 4, 9, 8, 7, 1, 2, 3],
+      [7, 1, 0, 6, 5, 9, 8, 2, 3, 4],
+      [8, 7, 2, 1, 0, 6, 9, 3, 4, 5],
+      [9, 8, 7, 3, 2, 1, 0, 4, 5, 6],
+      [1, 9, 8, 7, 4, 3, 2, 5, 6, 0],
+      [3, 2, 9, 8, 7, 5, 4, 6, 0, 1],
+      [5, 4, 3, 9, 8, 7, 6, 0, 1, 2],
+      [2, 3, 4, 5, 6, 0, 1, 7, 8, 9],
+      [4, 5, 6, 0, 1, 2, 3, 8, 9, 7],
+      [6, 0, 1, 2, 3, 4, 5, 9, 7, 8],
+    ]
+    const B = [
+      [0, 7, 8, 9, 1, 3, 5, 2, 4, 6],
+      [6, 1, 7, 8, 9, 2, 4, 3, 5, 0],
+      [5, 0, 2, 7, 8, 9, 3, 4, 6, 1],
+      [4, 6, 1, 3, 7, 8, 9, 5, 0, 2],
+      [9, 5, 0, 2, 4, 7, 8, 6, 1, 3],
+      [8, 9, 6, 1, 3, 5, 7, 0, 2, 4],
+      [7, 8, 9, 0, 2, 4, 6, 1, 3, 5],
+      [1, 2, 3, 4, 5, 6, 0, 7, 8, 9],
+      [2, 3, 4, 5, 6, 0, 1, 9, 7, 8],
+      [3, 4, 5, 6, 0, 1, 2, 8, 9, 7],
+    ]
+    const toPairs = (L: number[][], G: number[][]) =>
+      L.map((row, i) => row.map((a, j) => `${a}${G[i][j]}`))
+    if (
+      JSON.stringify(latin) !== JSON.stringify(A) ||
+      JSON.stringify(greek) !== JSON.stringify(B)
+    ) {
+      const diffs: { i: number; j: number; got: [number, number]; exp: [number, number] }[] = []
+      for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+          const got: [number, number] = [latin[i][j], greek[i][j]]
+          const exp: [number, number] = [A[i][j], B[i][j]]
+          if (got[0] !== exp[0] || got[1] !== exp[1]) diffs.push({ i, j, got, exp })
+        }
+      }
+      console.log(
+        "m=3 generated pair grid:\n" +
+          toPairs(latin, greek)
+            .map((r) => r.join(" "))
+            .join("\n")
+      )
+      console.log(
+        "expected pair grid:\n" +
+          toPairs(A, B)
+            .map((r) => r.join(" "))
+            .join("\n")
+      )
+      console.log("diff cells:", diffs)
+    }
+    expect(latin).toEqual(A)
+    expect(greek).toEqual(B)
   })
 })
 
