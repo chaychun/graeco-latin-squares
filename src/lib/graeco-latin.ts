@@ -179,6 +179,11 @@ export function generateGraecoLatinAuto(
   return generateCyclicGraecoLatin(n, opts?.latinMultiplier ?? 1, opts?.greekMultiplier ?? 2)
 }
 
+export function isMethodOfDifferenceSupported(n: number): boolean {
+  const m = (n - 1) / 3
+  return Number.isInteger(m) && m % 2 === 1 && m >= 1
+}
+
 // From Bose, R. C., Shrikhande, S. S., & Parker, E. T. (1960). Further results on the construction of mutually orthogonal Latin squares and the falsity of Euler's conjecture. Canadian Journal of Mathematics, 12, 189-203.
 export function generateMethodOfDifferenceGraecoLatin(m: number): GraecoLatinSquare {
   if (m % 2 === 0 || m < 1) throw new Error("m must be odd and >= 1")
@@ -242,7 +247,7 @@ export function generateMethodOfDifferenceGraecoLatin(m: number): GraecoLatinSqu
       Astar[0].push(x(r))
       Astar[1].push(x(c))
       Astar[2].push(x((r + c) % m))
-      Astar[3].push(x((((2 * r + c) % m) + m) % m))
+      Astar[3].push(x((2 * r + c) % m))
     }
   }
   for (let i = 0; i < 4; i++) rows[i].push(...Astar[i])

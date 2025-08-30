@@ -10,6 +10,7 @@ import {
   generateGraecoLatinAuto,
   generateKlein4GraecoLatin,
   generateMethodOfDifferenceGraecoLatin,
+  isMethodOfDifferenceSupported,
 } from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
@@ -37,7 +38,7 @@ export default function Display() {
     square = generateKlein4GraecoLatin()
   } else if (method === "difference") {
     const m = (size - 1) / 3
-    if (Number.isInteger(m) && m % 2 === 1 && m >= 1) {
+    if (isMethodOfDifferenceSupported(size)) {
       square = generateMethodOfDifferenceGraecoLatin(m)
     } else {
       square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })

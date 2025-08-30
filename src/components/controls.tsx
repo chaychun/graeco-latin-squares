@@ -10,13 +10,18 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { primePowerDecomposition } from "@/lib/finite-field"
-import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
+import {
+  areMultipliersValid,
+  getAllMultipliers,
+  isMethodOfDifferenceSupported,
+} from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
 } from "@/lib/palettes"
+import type { Method } from "@/lib/store"
 import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Controls() {
@@ -42,8 +47,7 @@ export default function Controls() {
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
-    const m = (newSize - 1) / 3
-    const diffValid = Number.isInteger(m) && m % 2 === 1 && m >= 1
+    const diffValid = isMethodOfDifferenceSupported(newSize)
     if (method === "difference" && !diffValid) setMethod("auto")
     if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
     if (newSize !== 4 && method === "klein4") setMethod("auto")
@@ -111,12 +115,7 @@ export default function Controls() {
 
             <div>
               <Label htmlFor="method">Construction Method</Label>
-              <Select
-                value={method}
-                onValueChange={(value) =>
-                  setMethod(value as "auto" | "finite" | "cyclic" | "klein4" | "difference")
-                }
-              >
+              <Select value={method} onValueChange={(value) => setMethod(value as Method)}>
                 <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
@@ -131,11 +130,8 @@ export default function Controls() {
                   <SelectItem value="klein4" disabled={size !== 4}>
                     Klein 4 (4×4)
                   </SelectItem>
-                  <SelectItem
-                    value="difference"
-                    disabled={!(Number.isInteger((size - 1) / 3) && ((size - 1) / 3) % 2 === 1)}
-                  >
-                    Method of Difference (n = 3m + 1, m odd)
+                  <SelectItem value="difference" disabled={!isMethodOfDifferenceSupported(size)}>
+                    Method of Difference
                   </SelectItem>
                 </SelectContent>
               </Select>
