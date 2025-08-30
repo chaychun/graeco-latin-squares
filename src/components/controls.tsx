@@ -14,7 +14,7 @@ import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 // removed unused primePowerDecomposition import
 import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
-import { isMethodValid, validateMethod } from "@/lib/method-validation"
+import { isMethodValid } from "@/lib/method-validation"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -52,20 +52,6 @@ export default function Controls() {
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
-    const adjusted = validateMethod(method, newSize)
-    if (adjusted !== method) setMethod(adjusted)
-    const newMultipliers = getAllMultipliers(newSize)
-    if (!newMultipliers.includes(latinMultiplier)) {
-      setLatinMultiplier(newMultipliers[0] || 1)
-    }
-    if (!newMultipliers.includes(greekMultiplier)) {
-      const fallback =
-        newMultipliers.find((m) => m !== latinMultiplier) ||
-        newMultipliers[1] ||
-        newMultipliers[0] ||
-        1
-      setGreekMultiplier(fallback)
-    }
   }
 
   const getAvailableMultipliers = (exclude: number, forGreek = false) => {

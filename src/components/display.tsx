@@ -11,7 +11,6 @@ import {
   generateGraecoLatinAuto,
   generateMethodOfDifferenceGraecoLatin,
 } from "@/lib/graeco-latin"
-import { isMethodValid } from "@/lib/method-validation"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -30,34 +29,32 @@ export default function Display() {
     paletteSeed,
     latinMultiplier,
     greekMultiplier,
-    method,
     direct4x4Method,
+    getEffectiveMethod,
   } = useGraecoLatinStore()
 
   const svgRef = useRef<SVGSVGElement>(null)
 
+  const effectiveMethod = getEffectiveMethod()
+
   let square: GraecoLatinSquare
-  if (method === "difference") {
+  if (effectiveMethod === "difference") {
     const m = (size - 1) / 3
-    if (isMethodValid("difference", size)) {
-      square = generateMethodOfDifferenceGraecoLatin(m)
-    } else {
-      square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
-    }
-  } else if (method === "direct" && size === 12) {
+    square = generateMethodOfDifferenceGraecoLatin(m)
+  } else if (effectiveMethod === "direct" && size === 12) {
     const A = generateCyclicGraecoLatin(3)
     const B =
       direct4x4Method === "difference"
         ? generateMethodOfDifferenceGraecoLatin(1)
         : generateFiniteFieldGraecoLatin(4)!
     square = directProductGraecoLatin(A, B)
-  } else if (method === "finite") {
+  } else if (effectiveMethod === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
     if (ff) square = ff
     else if (size % 2 !== 0)
       square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
     else square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
-  } else if (method === "cyclic") {
+  } else if (effectiveMethod === "cyclic") {
     square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
   } else {
     square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
