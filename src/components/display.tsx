@@ -1,5 +1,5 @@
 import { Download } from "lucide-react"
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { downloadPNG, downloadSVG } from "@/lib/downloads"
@@ -11,7 +11,6 @@ import {
   generateGraecoLatinAuto,
   generateMethodOfDifferenceGraecoLatin,
 } from "@/lib/graeco-latin"
-import { isMethodValid } from "@/lib/method-validation"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -20,6 +19,7 @@ import {
   shufflePalette,
 } from "@/lib/palettes"
 import { useGraecoLatinStore } from "@/lib/store"
+import { useShallow } from "zustand/react/shallow"
 
 export default function Display() {
   const {
@@ -30,38 +30,51 @@ export default function Display() {
     paletteSeed,
     latinMultiplier,
     greekMultiplier,
-    method,
     direct4x4Method,
-  } = useGraecoLatinStore()
+    getEffectiveMethod,
+  } = useGraecoLatinStore(
+    useShallow((s) => ({
+      size: s.size,
+      paletteType: s.paletteType,
+      backgroundShift: s.backgroundShift,
+      foregroundShift: s.foregroundShift,
+      paletteSeed: s.paletteSeed,
+      latinMultiplier: s.latinMultiplier,
+      greekMultiplier: s.greekMultiplier,
+      direct4x4Method: s.direct4x4Method,
+      getEffectiveMethod: s.getEffectiveMethod,
+    }))
+  )
 
   const svgRef = useRef<SVGSVGElement>(null)
 
-  let square: GraecoLatinSquare
-  if (method === "difference") {
-    const m = (size - 1) / 3
-    if (isMethodValid("difference", size)) {
-      square = generateMethodOfDifferenceGraecoLatin(m)
-    } else {
-      square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+  const effectiveMethod = getEffectiveMethod()
+
+  const square: GraecoLatinSquare = useMemo(() => {
+    if (size === 12 && (effectiveMethod === "auto" || effectiveMethod === "direct")) {
+      const A = generateCyclicGraecoLatin(3)
+      const B =
+        direct4x4Method === "difference"
+          ? generateMethodOfDifferenceGraecoLatin(1)
+          : generateFiniteFieldGraecoLatin(4)!
+      return directProductGraecoLatin(A, B)
     }
-  } else if (method === "direct" && size === 12) {
-    const A = generateCyclicGraecoLatin(3)
-    const B =
-      direct4x4Method === "difference"
-        ? generateMethodOfDifferenceGraecoLatin(1)
-        : generateFiniteFieldGraecoLatin(4)!
-    square = directProductGraecoLatin(A, B)
-  } else if (method === "finite") {
-    const ff = generateFiniteFieldGraecoLatin(size)
-    if (ff) square = ff
-    else if (size % 2 !== 0)
-      square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
-    else square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
-  } else if (method === "cyclic") {
-    square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
-  } else {
-    square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
-  }
+    if (effectiveMethod === "difference") {
+      const m = (size - 1) / 3
+      return generateMethodOfDifferenceGraecoLatin(m)
+    }
+    if (effectiveMethod === "finite") {
+      const ff = generateFiniteFieldGraecoLatin(size)
+      if (ff) return ff
+      if (size % 2 !== 0) return generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
+      return generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+    }
+    if (effectiveMethod === "cyclic") {
+      return generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
+    }
+    return generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+  }, [size, effectiveMethod, direct4x4Method, latinMultiplier, greekMultiplier])
+
   const basePalette =
     paletteType === "pastel"
       ? PASTEL_PALETTE
