@@ -17,6 +17,7 @@ import {
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
+  shufflePalette,
 } from "@/lib/palettes"
 import { useGraecoLatinStore } from "@/lib/store"
 
@@ -26,6 +27,7 @@ export default function Display() {
     paletteType,
     backgroundShift,
     foregroundShift,
+    paletteSeed,
     latinMultiplier,
     greekMultiplier,
     method,
@@ -66,8 +68,10 @@ export default function Display() {
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
         : SCIENTIFIC_AMERICAN_59_PALETTE
-  const backgroundColors = shiftPalette(basePalette, backgroundShift).slice(0, size)
-  const foregroundColors = shiftPalette(basePalette, foregroundShift).slice(0, size)
+  const effectivePalette =
+    paletteSeed === 0 ? basePalette : shufflePalette(basePalette, paletteSeed)
+  const backgroundColors = shiftPalette(effectivePalette, backgroundShift).slice(0, size)
+  const foregroundColors = shiftPalette(effectivePalette, foregroundShift).slice(0, size)
 
   const cellSize = 60
   const innerSize = cellSize * 0.4

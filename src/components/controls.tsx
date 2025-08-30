@@ -1,5 +1,6 @@
-import { HelpCircle, Palette } from "lucide-react"
+import { HelpCircle, Palette, RotateCcw, Shuffle } from "lucide-react"
 import { useState } from "react"
+import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -22,6 +23,7 @@ import {
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
+  shufflePalette,
 } from "@/lib/palettes"
 import type { Method } from "@/lib/store"
 import { useGraecoLatinStore } from "@/lib/store"
@@ -33,6 +35,7 @@ export default function Controls() {
     paletteType,
     backgroundShift,
     foregroundShift,
+    paletteSeed,
     latinMultiplier,
     greekMultiplier,
     method,
@@ -41,6 +44,7 @@ export default function Controls() {
     setPaletteType,
     setBackgroundShift,
     setForegroundShift,
+    setPaletteSeed,
     setLatinMultiplier,
     setGreekMultiplier,
     setMethod,
@@ -85,8 +89,19 @@ export default function Controls() {
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
         : SCIENTIFIC_AMERICAN_59_PALETTE
-  const backgroundColors = shiftPalette(basePalette, backgroundShift).slice(0, size)
-  const foregroundColors = shiftPalette(basePalette, foregroundShift).slice(0, size)
+  const effectivePalette =
+    paletteSeed === 0 ? basePalette : shufflePalette(basePalette, paletteSeed)
+  const backgroundColors = shiftPalette(effectivePalette, backgroundShift).slice(0, size)
+  const foregroundColors = shiftPalette(effectivePalette, foregroundShift).slice(0, size)
+
+  const randomizePalette = () => {
+    const seed = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
+    setPaletteSeed(seed)
+  }
+
+  const resetPalette = () => {
+    setPaletteSeed(0)
+  }
 
   return (
     <ScrollArea className="h-full">
@@ -247,7 +262,26 @@ export default function Controls() {
             )}
 
             <div>
-              <Label htmlFor="palette">Color Palette</Label>
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <Label htmlFor="palette">Color Palette</Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button onClick={resetPalette} className="bg-white" variant="outline" size="sm">
+                    <RotateCcw className="h-4 w-4" />
+                    Reset
+                  </Button>
+                  <Button
+                    onClick={randomizePalette}
+                    className="bg-white"
+                    variant="outline"
+                    size="sm"
+                  >
+                    <Shuffle className="h-4 w-4" />
+                    Randomize
+                  </Button>
+                </div>
+              </div>
               <Select
                 value={paletteType}
                 onValueChange={(value) =>
