@@ -44,13 +44,10 @@ export default function Controls() {
     setSize(newSize)
     const m = (newSize - 1) / 3
     const diffValid = Number.isInteger(m) && m % 2 === 1 && m >= 1
-    if (diffValid) setMethod("difference")
-    else {
-      if (method === "difference") setMethod("auto")
-      if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
-      if (newSize !== 4 && method === "klein4") setMethod("auto")
-      if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
-    }
+    if (method === "difference" && !diffValid) setMethod("auto")
+    if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
+    if (newSize !== 4 && method === "klein4") setMethod("auto")
+    if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
     const newMultipliers = getAllMultipliers(newSize)
     if (!newMultipliers.includes(latinMultiplier)) {
       setLatinMultiplier(newMultipliers[0] || 1)
@@ -124,13 +121,11 @@ export default function Controls() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="auto" disabled={size === 10}>
-                    Auto
-                  </SelectItem>
-                  <SelectItem value="finite" disabled={!isPrimePower || size === 10}>
+                  <SelectItem value="auto">Auto</SelectItem>
+                  <SelectItem value="finite" disabled={!isPrimePower}>
                     Finite Field
                   </SelectItem>
-                  <SelectItem value="cyclic" disabled={size % 2 === 0 || size === 10}>
+                  <SelectItem value="cyclic" disabled={size % 2 === 0}>
                     Cyclic
                   </SelectItem>
                   <SelectItem value="klein4" disabled={size !== 4}>
