@@ -1,4 +1,5 @@
-import { Palette } from "lucide-react"
+import { HelpCircle, Palette } from "lucide-react"
+import { useState } from "react"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import {
@@ -9,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { primePowerDecomposition } from "@/lib/finite-field"
 import {
   areMultipliersValid,
@@ -25,6 +27,7 @@ import type { Method } from "@/lib/store"
 import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Controls() {
+  const [sixHelpOpen, setSixHelpOpen] = useState(false)
   const {
     size,
     paletteType,
@@ -98,7 +101,14 @@ export default function Controls() {
               <Label htmlFor="size">Grid Size (n)</Label>
               <Select
                 value={size.toString()}
-                onValueChange={(value) => handleSizeChange(Number.parseInt(value, 10))}
+                onValueChange={(value) => {
+                  if (value === "6") return
+                  setSixHelpOpen(false)
+                  handleSizeChange(Number.parseInt(value, 10))
+                }}
+                onOpenChange={(open) => {
+                  if (!open) setSixHelpOpen(false)
+                }}
               >
                 <SelectTrigger className="mt-2 bg-white">
                   <SelectValue />
@@ -107,6 +117,40 @@ export default function Controls() {
                   <SelectItem value="3">3×3</SelectItem>
                   <SelectItem value="4">4×4</SelectItem>
                   <SelectItem value="5">5×5</SelectItem>
+                  <SelectItem
+                    value="6"
+                    className="opacity-60"
+                    aria-disabled
+                    onSelect={(e) => e.preventDefault()}
+                    onPointerDown={(e) => e.preventDefault()}
+                  >
+                    <span className="flex items-center gap-2">
+                      6×6
+                      <Tooltip open={sixHelpOpen} onOpenChange={setSixHelpOpen}>
+                        <TooltipTrigger asChild>
+                          <button
+                            type="button"
+                            aria-label="Why 6×6 is disabled"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              setSixHelpOpen((v) => !v)
+                            }}
+                            onPointerDown={(e) => {
+                              e.stopPropagation()
+                              e.preventDefault()
+                            }}
+                            className="inline-flex items-center"
+                          >
+                            <HelpCircle className="h-4 w-4" />
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent sideOffset={6} className="max-w-[380px] lg:max-w-none">
+                          6×6 Graeco-Latin squares are impossible to construct. This was proven by
+                          Gaston Tarry in 1901.
+                        </TooltipContent>
+                      </Tooltip>
+                    </span>
+                  </SelectItem>
                   <SelectItem value="7">7×7</SelectItem>
                   <SelectItem value="8">8×8</SelectItem>
                   <SelectItem value="9">9×9</SelectItem>
