@@ -49,3 +49,25 @@ export const SCIENTIFIC_AMERICAN_59_PALETTE = [
 export function shiftPalette(palette: string[], shift: number): string[] {
   return palette.map((_color, index) => palette[(index + shift) % palette.length])
 }
+
+function mulberry32(seed: number) {
+  let t = seed + 0x6d2b79f5
+  return () => {
+    t += 0x6d2b79f5
+    let x = Math.imul(t ^ (t >>> 15), 1 | t)
+    x ^= x + Math.imul(x ^ (x >>> 7), 61 | x)
+    return ((x ^ (x >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+export function shufflePalette(palette: string[], seed: number): string[] {
+  const random = mulberry32(seed >>> 0)
+  const arr = palette.slice()
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    const tmp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = tmp
+  }
+  return arr
+}

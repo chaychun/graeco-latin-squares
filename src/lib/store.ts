@@ -7,6 +7,7 @@ interface GraecoLatinState {
   paletteType: "pastel" | "grayscale" | "scientific_american_59"
   backgroundShift: number
   foregroundShift: number
+  paletteSeed: number
   latinMultiplier: number
   greekMultiplier: number
   method: Method
@@ -15,6 +16,7 @@ interface GraecoLatinState {
   setPaletteType: (paletteType: "pastel" | "grayscale" | "scientific_american_59") => void
   setBackgroundShift: (shift: number) => void
   setForegroundShift: (shift: number) => void
+  setPaletteSeed: (seed: number) => void
   setLatinMultiplier: (multiplier: number) => void
   setGreekMultiplier: (multiplier: number) => void
   setMethod: (method: Method) => void
@@ -26,6 +28,7 @@ export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
   paletteType: "pastel",
   backgroundShift: 0,
   foregroundShift: 0,
+  paletteSeed: 0,
   latinMultiplier: 1,
   greekMultiplier: 2,
   method: "auto",
@@ -35,6 +38,7 @@ export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
     set({ paletteType }),
   setBackgroundShift: (backgroundShift: number) => set({ backgroundShift }),
   setForegroundShift: (foregroundShift: number) => set({ foregroundShift }),
+  setPaletteSeed: (paletteSeed: number) => set({ paletteSeed }),
   setLatinMultiplier: (latinMultiplier: number) => set({ latinMultiplier }),
   setGreekMultiplier: (greekMultiplier: number) => set({ greekMultiplier }),
   setMethod: (method: Method) => set({ method }),
