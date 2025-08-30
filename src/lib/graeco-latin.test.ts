@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import {
   areMultipliersValid,
+  directProductGraecoLatin,
   generateCyclicGraecoLatin,
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
@@ -273,6 +274,41 @@ describe("generateFiniteFieldGraecoLatin", () => {
       }
     }
     expect(failures).toHaveLength(0)
+  })
+})
+
+describe("directProductGraecoLatin", () => {
+  it("constructs 12 = 3*4 from 3 and 4", () => {
+    const A = generateCyclicGraecoLatin(3)
+    const B = generateKlein4GraecoLatin()
+    const C = directProductGraecoLatin(A, B)
+    expect(C.latin.length).toBe(12)
+    expect(C.greek.length).toBe(12)
+    const isLatin = (M: number[][]) => {
+      const n = M.length
+      for (let i = 0; i < n; i++) if (new Set(M[i]).size !== n) return false
+      for (let j = 0; j < n; j++) {
+        const s = new Set<number>()
+        for (let i = 0; i < n; i++) s.add(M[i][j])
+        if (s.size !== n) return false
+      }
+      return true
+    }
+    const ortho = (L: number[][], G: number[][]) => {
+      const n = L.length
+      const seen = new Set<number>()
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const key = L[i][j] * (n * n) + G[i][j]
+          if (seen.has(key)) return false
+          seen.add(key)
+        }
+      }
+      return seen.size === n * n
+    }
+    expect(isLatin(C.latin)).toBe(true)
+    expect(isLatin(C.greek)).toBe(true)
+    expect(ortho(C.latin, C.greek)).toBe(true)
   })
 })
 

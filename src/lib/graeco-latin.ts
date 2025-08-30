@@ -156,6 +156,32 @@ export function generateFiniteFieldGraecoLatin(
   return { latin, greek }
 }
 
+export function directProductGraecoLatin(
+  A: GraecoLatinSquare,
+  B: GraecoLatinSquare
+): GraecoLatinSquare {
+  const m = A.latin.length
+  const n = B.latin.length
+  const size = m * n
+  const latin: number[][] = Array.from({ length: size }, () => Array(size).fill(0))
+  const greek: number[][] = Array.from({ length: size }, () => Array(size).fill(0))
+  for (let i = 0; i < m; i++) {
+    for (let j = 0; j < m; j++) {
+      const aL = A.latin[i][j]
+      const aG = A.greek[i][j]
+      for (let i2 = 0; i2 < n; i2++) {
+        for (let j2 = 0; j2 < n; j2++) {
+          const r = i * n + i2
+          const c = j * n + j2
+          latin[r][c] = aL * n + B.latin[i2][j2]
+          greek[r][c] = aG * n + B.greek[i2][j2]
+        }
+      }
+    }
+  }
+  return { latin, greek }
+}
+
 export function generateGraecoLatinAuto(
   n: number,
   opts?: {
