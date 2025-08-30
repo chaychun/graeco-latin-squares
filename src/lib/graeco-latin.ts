@@ -192,7 +192,7 @@ export function generateGraecoLatinAuto(
 ): GraecoLatinSquare {
   if (n === 12) {
     const a3 = generateCyclicGraecoLatin(3)
-    const b4 = generateKlein4GraecoLatin()
+    const b4 = generateFiniteFieldGraecoLatin(4)!
     return directProductGraecoLatin(a3, b4)
   }
   const dec = primePowerDecomposition(n)

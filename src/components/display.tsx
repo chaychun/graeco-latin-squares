@@ -50,7 +50,7 @@ export default function Display() {
     const B =
       direct4x4Method === "difference"
         ? generateMethodOfDifferenceGraecoLatin(1)
-        : generateKlein4GraecoLatin()
+        : generateFiniteFieldGraecoLatin(4)!
     square = directProductGraecoLatin(A, B)
   } else if (method === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
