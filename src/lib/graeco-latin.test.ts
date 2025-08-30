@@ -5,7 +5,6 @@ import {
   generateCyclicGraecoLatin,
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
-  generateKlein4GraecoLatin,
   generateMethodOfDifferenceGraecoLatin,
   getAllMultipliers,
 } from "./graeco-latin"
@@ -186,55 +185,6 @@ describe("generateMethodOfDifferenceGraecoLatin", () => {
   })
 })
 
-describe("generateKlein4GraecoLatin", () => {
-  it("produces 4x4 Latin squares and orthogonal pairs for default M", () => {
-    const { latin, greek } = generateKlein4GraecoLatin()
-    expect(latin.length).toBe(4)
-    expect(greek.length).toBe(4)
-    expect(isLatinSquare(latin)).toBe(true)
-    expect(isLatinSquare(greek)).toBe(true)
-    expect(arePairsOrthogonal(latin, greek)).toBe(true)
-  })
-
-  it("matches the explicit example pairs for M=[[0,1],[1,1]] up to labels", () => {
-    const { latin, greek } = generateKlein4GraecoLatin([
-      [0, 1],
-      [1, 1],
-    ])
-    const expectedPairs = [
-      [
-        [0, 0],
-        [1, 2],
-        [2, 3],
-        [3, 1],
-      ],
-      [
-        [1, 1],
-        [0, 3],
-        [3, 2],
-        [2, 0],
-      ],
-      [
-        [2, 2],
-        [3, 0],
-        [0, 1],
-        [1, 3],
-      ],
-      [
-        [3, 3],
-        [2, 1],
-        [1, 0],
-        [0, 2],
-      ],
-    ]
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        expect([latin[i][j], greek[i][j]]).toEqual(expectedPairs[i][j])
-      }
-    }
-  })
-})
-
 describe("generateFiniteFieldGraecoLatin", () => {
   const sizes = [3, 4, 5, 7, 8, 9, 11, 13]
   it("produces Latin/orthogonal for prime powers via finite field", () => {
@@ -280,7 +230,7 @@ describe("generateFiniteFieldGraecoLatin", () => {
 describe("directProductGraecoLatin", () => {
   it("constructs 12 = 3*4 from 3 and 4", () => {
     const A = generateCyclicGraecoLatin(3)
-    const B = generateKlein4GraecoLatin()
+    const B = generateFiniteFieldGraecoLatin(4)!
     const C = directProductGraecoLatin(A, B)
     expect(C.latin.length).toBe(12)
     expect(C.greek.length).toBe(12)
