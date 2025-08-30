@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { downloadPNG, downloadSVG } from "@/lib/downloads"
 import {
+  directProductGraecoLatin,
   type GraecoLatinSquare,
   generateCyclicGraecoLatin,
   generateFiniteFieldGraecoLatin,
@@ -29,6 +30,7 @@ export default function Display() {
     latinMultiplier,
     greekMultiplier,
     method,
+    direct4x4Method,
   } = useGraecoLatinStore()
 
   const svgRef = useRef<SVGSVGElement>(null)
@@ -43,6 +45,13 @@ export default function Display() {
     } else {
       square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
     }
+  } else if (method === "direct" && size === 12) {
+    const A = generateCyclicGraecoLatin(3)
+    const B =
+      direct4x4Method === "difference"
+        ? generateMethodOfDifferenceGraecoLatin(1)
+        : generateFiniteFieldGraecoLatin(4)!
+    square = directProductGraecoLatin(A, B)
   } else if (method === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
     if (ff) square = ff

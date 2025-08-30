@@ -33,6 +33,7 @@ export default function Controls() {
     latinMultiplier,
     greekMultiplier,
     method,
+    direct4x4Method,
     setSize,
     setPaletteType,
     setBackgroundShift,
@@ -40,6 +41,7 @@ export default function Controls() {
     setLatinMultiplier,
     setGreekMultiplier,
     setMethod,
+    setDirect4x4Method,
   } = useGraecoLatinStore()
 
   const availableMultipliers = getAllMultipliers(size)
@@ -52,6 +54,7 @@ export default function Controls() {
     if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
     if (newSize !== 4 && method === "klein4") setMethod("auto")
     if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
+    if (newSize !== 12 && method === "direct") setMethod("auto")
     const newMultipliers = getAllMultipliers(newSize)
     if (!newMultipliers.includes(latinMultiplier)) {
       setLatinMultiplier(newMultipliers[0] || 1)
@@ -109,6 +112,9 @@ export default function Controls() {
                   <SelectItem value="8">8×8</SelectItem>
                   <SelectItem value="9">9×9</SelectItem>
                   <SelectItem value="10">10×10</SelectItem>
+                  <SelectItem value="11">11×11</SelectItem>
+                  <SelectItem value="12">12×12</SelectItem>
+                  <SelectItem value="13">13×13</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -132,6 +138,9 @@ export default function Controls() {
                   </SelectItem>
                   <SelectItem value="difference" disabled={!isMethodOfDifferenceSupported(size)}>
                     Method of Difference
+                  </SelectItem>
+                  <SelectItem value="direct" disabled={size !== 12}>
+                    Direct Product
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -174,6 +183,24 @@ export default function Controls() {
                         {multiplier}
                       </SelectItem>
                     ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {method === "direct" && size === 12 && (
+              <div>
+                <Label htmlFor="direct4x4">4×4 component method</Label>
+                <Select
+                  value={direct4x4Method}
+                  onValueChange={(value) => setDirect4x4Method(value as "finite" | "difference")}
+                >
+                  <SelectTrigger className="mt-2 bg-white">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="finite">4×4 via Finite Field</SelectItem>
+                    <SelectItem value="difference">4×4 via Method of Difference</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

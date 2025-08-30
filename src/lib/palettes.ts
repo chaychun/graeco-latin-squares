@@ -9,19 +9,25 @@ export const PASTEL_PALETTE = [
   "#F7DC6F",
   "#BB8FCE",
   "#85C1E9",
+  "#F8C291",
+  "#F5B7B1",
+  "#A3E4D7",
 ]
 
 export const GRAYSCALE_PALETTE = [
   "#000000",
+  "#0d0d0d",
   "#1a1a1a",
   "#333333",
   "#4d4d4d",
   "#666666",
+  "#737373",
   "#808080",
   "#999999",
   "#b3b3b3",
   "#cccccc",
   "#e6e6e6",
+  "#f2f2f2",
 ]
 
 export const SCIENTIFIC_AMERICAN_59_PALETTE = [
@@ -35,6 +41,9 @@ export const SCIENTIFIC_AMERICAN_59_PALETTE = [
   "#362731",
   "#3d4966",
   "#f9f8f7",
+  "#7f6a5a",
+  "#8a9a9f",
+  "#d0c7b8",
 ]
 
 export function shiftPalette(palette: string[], shift: number): string[] {
