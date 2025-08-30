@@ -9,6 +9,8 @@ import {
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
   generateKlein4GraecoLatin,
+  generateMethodOfDifferenceGraecoLatin,
+  isMethodOfDifferenceSupported,
 } from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
@@ -34,6 +36,13 @@ export default function Display() {
   let square: GraecoLatinSquare
   if (method === "klein4" && size === 4) {
     square = generateKlein4GraecoLatin()
+  } else if (method === "difference") {
+    const m = (size - 1) / 3
+    if (isMethodOfDifferenceSupported(size)) {
+      square = generateMethodOfDifferenceGraecoLatin(m)
+    } else {
+      square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+    }
   } else if (method === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
     if (ff) square = ff

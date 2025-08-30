@@ -1,5 +1,7 @@
 import { create } from "zustand"
 
+export type Method = "auto" | "finite" | "cyclic" | "klein4" | "difference"
+
 interface GraecoLatinState {
   size: number
   paletteType: "pastel" | "grayscale" | "scientific_american_59"
@@ -7,14 +9,14 @@ interface GraecoLatinState {
   foregroundShift: number
   latinMultiplier: number
   greekMultiplier: number
-  method: "auto" | "finite" | "cyclic" | "klein4"
+  method: Method
   setSize: (size: number) => void
   setPaletteType: (paletteType: "pastel" | "grayscale" | "scientific_american_59") => void
   setBackgroundShift: (shift: number) => void
   setForegroundShift: (shift: number) => void
   setLatinMultiplier: (multiplier: number) => void
   setGreekMultiplier: (multiplier: number) => void
-  setMethod: (method: "auto" | "finite" | "cyclic" | "klein4") => void
+  setMethod: (method: Method) => void
 }
 
 export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
@@ -32,5 +34,5 @@ export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
   setForegroundShift: (foregroundShift: number) => set({ foregroundShift }),
   setLatinMultiplier: (latinMultiplier: number) => set({ latinMultiplier }),
   setGreekMultiplier: (greekMultiplier: number) => set({ greekMultiplier }),
-  setMethod: (method: "auto" | "finite" | "cyclic" | "klein4") => set({ method }),
+  setMethod: (method: Method) => set({ method }),
 }))

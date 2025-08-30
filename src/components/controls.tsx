@@ -10,13 +10,18 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { primePowerDecomposition } from "@/lib/finite-field"
-import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
+import {
+  areMultipliersValid,
+  getAllMultipliers,
+  isMethodOfDifferenceSupported,
+} from "@/lib/graeco-latin"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
 } from "@/lib/palettes"
+import type { Method } from "@/lib/store"
 import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Controls() {
@@ -42,6 +47,8 @@ export default function Controls() {
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
+    const diffValid = isMethodOfDifferenceSupported(newSize)
+    if (method === "difference" && !diffValid) setMethod("auto")
     if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
     if (newSize !== 4 && method === "klein4") setMethod("auto")
     if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
@@ -101,18 +108,14 @@ export default function Controls() {
                   <SelectItem value="7">7×7</SelectItem>
                   <SelectItem value="8">8×8</SelectItem>
                   <SelectItem value="9">9×9</SelectItem>
+                  <SelectItem value="10">10×10</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
               <Label htmlFor="method">Construction Method</Label>
-              <Select
-                value={method}
-                onValueChange={(value) =>
-                  setMethod(value as "auto" | "finite" | "cyclic" | "klein4")
-                }
-              >
+              <Select value={method} onValueChange={(value) => setMethod(value as Method)}>
                 <SelectTrigger className="bg-white mt-2">
                   <SelectValue />
                 </SelectTrigger>
@@ -126,6 +129,9 @@ export default function Controls() {
                   </SelectItem>
                   <SelectItem value="klein4" disabled={size !== 4}>
                     Klein 4 (4×4)
+                  </SelectItem>
+                  <SelectItem value="difference" disabled={!isMethodOfDifferenceSupported(size)}>
+                    Method of Difference
                   </SelectItem>
                 </SelectContent>
               </Select>

@@ -165,7 +165,9 @@ export function generateGraecoLatinAuto(
   }
 ): GraecoLatinSquare {
   const dec = primePowerDecomposition(n)
+  if (n === 4) return generateMethodOfDifferenceGraecoLatin(1)
   if (n % 2 === 0) {
+    if (n === 10) return generateMethodOfDifferenceGraecoLatin(3)
     const ffEven = generateFiniteFieldGraecoLatin(n, opts?.matrix)
     if (ffEven) return ffEven
     throw new Error("No valid construction for even size without finite field support")
@@ -175,4 +177,89 @@ export function generateGraecoLatinAuto(
     if (ff) return ff
   }
   return generateCyclicGraecoLatin(n, opts?.latinMultiplier ?? 1, opts?.greekMultiplier ?? 2)
+}
+
+export function isMethodOfDifferenceSupported(n: number): boolean {
+  const m = (n - 1) / 3
+  return Number.isInteger(m) && m % 2 === 1 && m >= 1
+}
+
+// From Bose, R. C., Shrikhande, S. S., & Parker, E. T. (1960). Further results on the construction of mutually orthogonal Latin squares and the falsity of Euler's conjecture. Canadian Journal of Mathematics, 12, 189-203.
+export function generateMethodOfDifferenceGraecoLatin(m: number): GraecoLatinSquare {
+  if (m % 2 === 0 || m < 1) throw new Error("m must be odd and >= 1")
+  const n = 2 * m + 1
+  const v = 3 * m + 1
+
+  const x = (j: number) => n + j
+
+  const A0: number[][] = [[], [], [], []]
+  for (let j = 0; j < m; j++) {
+    const r = j + 1
+    const s = 2 * m - j
+    const X = x(j)
+    A0[0].push(0)
+    A0[1].push(r)
+    A0[2].push(s)
+    A0[3].push(X)
+
+    A0[0].push(r)
+    A0[1].push(0)
+    A0[2].push(X)
+    A0[3].push(s)
+
+    A0[0].push(s)
+    A0[1].push(X)
+    A0[2].push(0)
+    A0[3].push(r)
+
+    A0[0].push(X)
+    A0[1].push(s)
+    A0[2].push(r)
+    A0[3].push(0)
+  }
+
+  const addShift = (arr: number[][], shift: number) => {
+    const out: number[][] = [[], [], [], []]
+    for (let i = 0; i < 4; i++) {
+      for (let c = 0; c < arr[i].length; c++) {
+        const v0 = arr[i][c]
+        out[i].push(v0 < n ? (v0 + shift) % n : v0)
+      }
+    }
+    return out
+  }
+
+  const rows: number[][] = [[], [], [], []]
+  for (let i = 0; i < n; i++) {
+    rows[0].push(i)
+    rows[1].push(i)
+    rows[2].push(i)
+    rows[3].push(i)
+  }
+  for (let s = 0; s < n; s++) {
+    const As = addShift(A0, s)
+    for (let i = 0; i < 4; i++) rows[i].push(...As[i])
+  }
+
+  const Astar: number[][] = [[], [], [], []]
+  for (let r = 0; r < m; r++) {
+    for (let c = 0; c < m; c++) {
+      Astar[0].push(x(r))
+      Astar[1].push(x(c))
+      Astar[2].push(x((r + c) % m))
+      Astar[3].push(x((2 * r + c) % m))
+    }
+  }
+  for (let i = 0; i < 4; i++) rows[i].push(...Astar[i])
+
+  const latin: number[][] = Array.from({ length: v }, () => Array(v).fill(0))
+  const greek: number[][] = Array.from({ length: v }, () => Array(v).fill(0))
+  const cols = rows[0].length
+  for (let k = 0; k < cols; k++) {
+    const r = rows[0][k]
+    const c = rows[1][k]
+    latin[r][c] = rows[2][k]
+    greek[r][c] = rows[3][k]
+  }
+  return { latin, greek }
 }
