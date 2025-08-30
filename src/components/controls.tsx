@@ -52,7 +52,6 @@ export default function Controls() {
     const diffValid = isMethodOfDifferenceSupported(newSize)
     if (method === "difference" && !diffValid) setMethod("auto")
     if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
-    if (newSize !== 4 && method === "klein4") setMethod("auto")
     if (!primePowerDecomposition(newSize) && method === "finite") setMethod("auto")
     if (newSize !== 12 && method === "direct") setMethod("auto")
     const newMultipliers = getAllMultipliers(newSize)
@@ -132,9 +131,6 @@ export default function Controls() {
                   </SelectItem>
                   <SelectItem value="cyclic" disabled={size % 2 === 0}>
                     Cyclic
-                  </SelectItem>
-                  <SelectItem value="klein4" disabled={size !== 4}>
-                    Klein 4 (4×4)
                   </SelectItem>
                   <SelectItem value="difference" disabled={!isMethodOfDifferenceSupported(size)}>
                     Method of Difference

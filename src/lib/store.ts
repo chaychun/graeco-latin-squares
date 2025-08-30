@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-export type Method = "auto" | "finite" | "cyclic" | "klein4" | "difference" | "direct"
+export type Method = "auto" | "finite" | "cyclic" | "difference" | "direct"
 
 interface GraecoLatinState {
   size: number

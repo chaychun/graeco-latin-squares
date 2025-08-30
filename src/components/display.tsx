@@ -9,7 +9,6 @@ import {
   generateCyclicGraecoLatin,
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
-  generateKlein4GraecoLatin,
   generateMethodOfDifferenceGraecoLatin,
   isMethodOfDifferenceSupported,
 } from "@/lib/graeco-latin"
@@ -36,9 +35,7 @@ export default function Display() {
   const svgRef = useRef<SVGSVGElement>(null)
 
   let square: GraecoLatinSquare
-  if (method === "klein4" && size === 4) {
-    square = generateKlein4GraecoLatin()
-  } else if (method === "difference") {
+  if (method === "difference") {
     const m = (size - 1) / 3
     if (isMethodOfDifferenceSupported(size)) {
       square = generateMethodOfDifferenceGraecoLatin(m)
@@ -55,7 +52,6 @@ export default function Display() {
   } else if (method === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
     if (ff) square = ff
-    else if (size === 4) square = generateKlein4GraecoLatin()
     else if (size % 2 !== 0)
       square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
     else square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
