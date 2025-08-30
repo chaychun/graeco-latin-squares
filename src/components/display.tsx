@@ -38,16 +38,16 @@ export default function Display() {
   const effectiveMethod = getEffectiveMethod()
 
   let square: GraecoLatinSquare
-  if (effectiveMethod === "difference") {
-    const m = (size - 1) / 3
-    square = generateMethodOfDifferenceGraecoLatin(m)
-  } else if (effectiveMethod === "direct" && size === 12) {
+  if (size === 12 && (effectiveMethod === "auto" || effectiveMethod === "direct")) {
     const A = generateCyclicGraecoLatin(3)
     const B =
       direct4x4Method === "difference"
         ? generateMethodOfDifferenceGraecoLatin(1)
         : generateFiniteFieldGraecoLatin(4)!
     square = directProductGraecoLatin(A, B)
+  } else if (effectiveMethod === "difference") {
+    const m = (size - 1) / 3
+    square = generateMethodOfDifferenceGraecoLatin(m)
   } else if (effectiveMethod === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
     if (ff) square = ff
