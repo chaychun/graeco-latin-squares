@@ -87,8 +87,8 @@ export default function Controls() {
     <ScrollArea className="h-full">
       <div className="space-y-6 pr-4 pb-6">
         <div>
-          <h3 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
-            <Palette className="w-5 h-5" />
+          <h3 className="mb-4 flex items-center gap-2 font-semibold text-lg text-slate-800">
+            <Palette className="h-5 w-5" />
             Controls
           </h3>
           <div className="space-y-6">
@@ -98,7 +98,7 @@ export default function Controls() {
                 value={size.toString()}
                 onValueChange={(value) => handleSizeChange(Number.parseInt(value, 10))}
               >
-                <SelectTrigger className="bg-white mt-2">
+                <SelectTrigger className="mt-2 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -116,7 +116,7 @@ export default function Controls() {
             <div>
               <Label htmlFor="method">Construction Method</Label>
               <Select value={method} onValueChange={(value) => setMethod(value as Method)}>
-                <SelectTrigger className="bg-white mt-2">
+                <SelectTrigger className="mt-2 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -144,7 +144,7 @@ export default function Controls() {
                   value={latinMultiplier.toString()}
                   onValueChange={(value) => setLatinMultiplier(Number.parseInt(value, 10))}
                 >
-                  <SelectTrigger className="bg-white mt-2">
+                  <SelectTrigger className="mt-2 bg-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -165,7 +165,7 @@ export default function Controls() {
                   value={greekMultiplier.toString()}
                   onValueChange={(value) => setGreekMultiplier(Number.parseInt(value, 10))}
                 >
-                  <SelectTrigger className="bg-white mt-2">
+                  <SelectTrigger className="mt-2 bg-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -187,7 +187,7 @@ export default function Controls() {
                   setPaletteType(value as "pastel" | "grayscale" | "scientific_american_59")
                 }
               >
-                <SelectTrigger className="bg-white mt-2">
+                <SelectTrigger className="mt-2 bg-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -221,28 +221,28 @@ export default function Controls() {
             </div>
 
             <div>
-              <h4 className="text-sm font-medium text-slate-700 mb-3">Color Preview</h4>
+              <h4 className="mb-3 font-medium text-slate-700 text-sm">Color Preview</h4>
               <div>
                 <div className="space-y-3">
                   <div>
-                    <Label className="text-xs text-slate-600">Background Colors</Label>
-                    <div className="flex gap-1 mt-1">
+                    <Label className="text-slate-600 text-xs">Background Colors</Label>
+                    <div className="mt-1 flex gap-1">
                       {backgroundColors.map((color) => (
                         <div
                           key={color}
-                          className="w-6 h-6 rounded border border-slate-300"
+                          className="h-6 w-6 rounded border border-slate-300"
                           style={{ backgroundColor: color }}
                         />
                       ))}
                     </div>
                   </div>
                   <div>
-                    <Label className="text-xs text-slate-600">Foreground Colors</Label>
-                    <div className="flex gap-1 mt-1">
+                    <Label className="text-slate-600 text-xs">Foreground Colors</Label>
+                    <div className="mt-1 flex gap-1">
                       {foregroundColors.map((color) => (
                         <div
                           key={color}
-                          className="w-6 h-6 rounded border border-slate-300"
+                          className="h-6 w-6 rounded border border-slate-300"
                           style={{ backgroundColor: color }}
                         />
                       ))}

@@ -3,11 +3,11 @@ import Display from "@/components/display"
 
 function App() {
   return (
-    <div className="h-screen bg-neutral-50 overflow-hidden">
-      <div className="h-full max-w-[528px] lg:max-w-7xl mx-auto p-6">
-        <div className="flex flex-col lg:flex-row-reverse gap-6 lg:gap-8 h-full">
+    <div className="h-screen overflow-hidden bg-neutral-50">
+      <div className="mx-auto h-full max-w-[528px] p-6 lg:max-w-7xl">
+        <div className="flex h-full flex-col gap-6 lg:flex-row-reverse lg:gap-8">
           <Display />
-          <div className="flex-1 lg:max-w-[420px] overflow-hidden">
+          <div className="flex-1 overflow-hidden lg:max-w-[420px]">
             <Controls />
           </div>
         </div>

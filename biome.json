@@ -10,6 +10,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "suspicious": {
+        "noUnknownAtRules": "off"
+      },
       "correctness": {
         "useExhaustiveDependencies": "error",
         "useHookAtTopLevel": "error"
@@ -54,6 +57,9 @@
         "useValidAriaValues": "off",
         "useValidAutocomplete": "off",
         "useValidLang": "off"
+      },
+      "nursery": {
+        "useSortedClasses": { "level": "warn", "fix": "safe" }
       }
     }
   },

@@ -72,13 +72,13 @@ export default function Display() {
     <div className="w-full max-w-full lg:max-w-lg xl:max-w-xl">
       <Card>
         <CardContent className="flex justify-center">
-          <div className="w-full max-w-sm sm:max-w-md lg:max-w-full aspect-square mx-auto">
+          <div className="mx-auto aspect-square w-full max-w-sm sm:max-w-md lg:max-w-full">
             <svg
               ref={svgRef}
               width="100%"
               height="100%"
               viewBox={`0 0 ${svgSize} ${svgSize}`}
-              className="w-full h-full"
+              className="h-full w-full"
               preserveAspectRatio="xMidYMid meet"
             >
               {square.latin.map((row, i) =>
@@ -119,7 +119,7 @@ export default function Display() {
           className="flex-1 bg-white"
           variant="outline"
         >
-          <Download className="w-4 h-4 mr-2" />
+          <Download className="mr-2 h-4 w-4" />
           Download SVG
         </Button>
         <Button
@@ -127,7 +127,7 @@ export default function Display() {
           className="flex-1 bg-white"
           variant="outline"
         >
-          <Download className="w-4 h-4 mr-2" />
+          <Download className="mr-2 h-4 w-4" />
           Download PNG
         </Button>
       </div>
