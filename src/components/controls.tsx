@@ -42,7 +42,9 @@ export default function Controls() {
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
-    if (newSize === 10) setMethod("difference")
+    const m = (newSize - 1) / 3
+    const diffValid = Number.isInteger(m) && m % 2 === 1 && m >= 1
+    if (diffValid) setMethod("difference")
     else {
       if (method === "difference") setMethod("auto")
       if (newSize % 2 === 0 && method === "cyclic") setMethod("auto")
@@ -134,8 +136,11 @@ export default function Controls() {
                   <SelectItem value="klein4" disabled={size !== 4}>
                     Klein 4 (4×4)
                   </SelectItem>
-                  <SelectItem value="difference" disabled={size !== 10}>
-                    Method of Difference (10×10)
+                  <SelectItem
+                    value="difference"
+                    disabled={!(Number.isInteger((size - 1) / 3) && ((size - 1) / 3) % 2 === 1)}
+                  >
+                    Method of Difference (n = 3m + 1, m odd)
                   </SelectItem>
                 </SelectContent>
               </Select>

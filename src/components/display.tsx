@@ -35,8 +35,13 @@ export default function Display() {
   let square: GraecoLatinSquare
   if (method === "klein4" && size === 4) {
     square = generateKlein4GraecoLatin()
-  } else if (method === "difference" && size === 10) {
-    square = generateMethodOfDifferenceGraecoLatin(3)
+  } else if (method === "difference") {
+    const m = (size - 1) / 3
+    if (Number.isInteger(m) && m % 2 === 1 && m >= 1) {
+      square = generateMethodOfDifferenceGraecoLatin(m)
+    } else {
+      square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+    }
   } else if (method === "finite") {
     const ff = generateFiniteFieldGraecoLatin(size)
     if (ff) square = ff
