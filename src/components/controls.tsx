@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { primePowerDecomposition } from "@/lib/finite-field"
+// removed unused primePowerDecomposition import
 import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
 import { isMethodValid, validateMethod } from "@/lib/method-validation"
 import {
@@ -49,7 +49,6 @@ export default function Controls() {
   } = useGraecoLatinStore()
 
   const availableMultipliers = getAllMultipliers(size)
-  const isPrimePower = !!primePowerDecomposition(size)
 
   const handleSizeChange = (newSize: number) => {
     setSize(newSize)
