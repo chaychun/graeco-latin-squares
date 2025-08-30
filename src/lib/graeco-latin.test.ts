@@ -236,7 +236,7 @@ describe("generateKlein4GraecoLatin", () => {
 })
 
 describe("generateFiniteFieldGraecoLatin", () => {
-  const sizes = [3, 4, 5, 7, 8, 9]
+  const sizes = [3, 4, 5, 7, 8, 9, 11, 13]
   it("produces Latin/orthogonal for prime powers via finite field", () => {
     const failures: number[] = []
     for (const n of sizes) {
