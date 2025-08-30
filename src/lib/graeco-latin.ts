@@ -190,6 +190,11 @@ export function generateGraecoLatinAuto(
     greekMultiplier?: number
   }
 ): GraecoLatinSquare {
+  if (n === 12) {
+    const a3 = generateCyclicGraecoLatin(3)
+    const b4 = generateKlein4GraecoLatin()
+    return directProductGraecoLatin(a3, b4)
+  }
   const dec = primePowerDecomposition(n)
   if (n === 4) return generateMethodOfDifferenceGraecoLatin(1)
   if (n % 2 === 0) {
