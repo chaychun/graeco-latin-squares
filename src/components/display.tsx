@@ -68,9 +68,10 @@ export default function Display() {
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
         : SCIENTIFIC_AMERICAN_59_PALETTE
-  const shuffled = shufflePalette(basePalette, paletteSeed)
-  const backgroundColors = shiftPalette(shuffled, backgroundShift).slice(0, size)
-  const foregroundColors = shiftPalette(shuffled, foregroundShift).slice(0, size)
+  const effectivePalette =
+    paletteSeed === 0 ? basePalette : shufflePalette(basePalette, paletteSeed)
+  const backgroundColors = shiftPalette(effectivePalette, backgroundShift).slice(0, size)
+  const foregroundColors = shiftPalette(effectivePalette, foregroundShift).slice(0, size)
 
   const cellSize = 60
   const innerSize = cellSize * 0.4

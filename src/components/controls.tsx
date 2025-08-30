@@ -1,4 +1,4 @@
-import { HelpCircle, Palette, Shuffle } from "lucide-react"
+import { HelpCircle, Palette, RotateCcw, Shuffle } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -96,6 +96,10 @@ export default function Controls() {
   const randomizePalette = () => {
     const seed = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
     setPaletteSeed(seed)
+  }
+
+  const resetPalette = () => {
+    setPaletteSeed(0)
   }
 
   return (
@@ -261,10 +265,21 @@ export default function Controls() {
                 <div>
                   <Label htmlFor="palette">Color Palette</Label>
                 </div>
-                <Button onClick={randomizePalette} className="bg-white" variant="outline" size="sm">
-                  <Shuffle className="h-4 w-4" />
-                  Randomize
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button onClick={resetPalette} className="bg-white" variant="outline" size="sm">
+                    <RotateCcw className="h-4 w-4" />
+                    Reset
+                  </Button>
+                  <Button
+                    onClick={randomizePalette}
+                    className="bg-white"
+                    variant="outline"
+                    size="sm"
+                  >
+                    <Shuffle className="h-4 w-4" />
+                    Randomize
+                  </Button>
+                </div>
               </div>
               <Select
                 value={paletteType}
