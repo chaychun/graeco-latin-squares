@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-// removed unused primePowerDecomposition import
+import { primePowerDecomposition } from "@/lib/core/finite-field"
 import { areMultipliersValid, getAllMultipliers } from "@/lib/core/graeco-latin/graeco-latin"
 import type { Method } from "@/lib/core/graeco-latin/graeco-latin-store"
 import { useGraecoLatinStore } from "@/lib/core/graeco-latin/graeco-latin-store"
@@ -52,6 +52,18 @@ export default function Controls() {
   } = usePaletteStore()
 
   const availableMultipliers = getAllMultipliers(size)
+
+  const autoResolvedMethod = (() => {
+    if (size === 12) return "direct"
+    if (size === 4) return "difference"
+    const dec = primePowerDecomposition(size)
+    if (size % 2 === 0) {
+      if (size === 10) return "difference"
+      return dec ? "finite" : "finite"
+    }
+    if (dec && dec.k > 1) return "finite"
+    return "cyclic"
+  })()
 
   const getAvailableMultipliers = (exclude: number, forGreek = false) => {
     return availableMultipliers.filter((m) => {
@@ -176,9 +188,21 @@ export default function Controls() {
                   </SelectItem>
                 </SelectContent>
               </Select>
+              {method === "auto" && (
+                <div className="mt-2 text-slate-600 text-xs">
+                  Using:{" "}
+                  {autoResolvedMethod === "finite"
+                    ? "Finite Field"
+                    : autoResolvedMethod === "cyclic"
+                      ? "Cyclic"
+                      : autoResolvedMethod === "difference"
+                        ? "Method of Difference"
+                        : "Direct Product"}
+                </div>
+              )}
             </div>
 
-            {method === "cyclic" && (
+            {(method === "cyclic" || (method === "auto" && autoResolvedMethod === "cyclic")) && (
               <div>
                 <Label htmlFor="latinMultiplier">Latin Square Multiplier</Label>
                 <Select
@@ -199,7 +223,7 @@ export default function Controls() {
               </div>
             )}
 
-            {method === "cyclic" && (
+            {(method === "cyclic" || (method === "auto" && autoResolvedMethod === "cyclic")) && (
               <div>
                 <Label htmlFor="greekMultiplier">Greek Square Multiplier</Label>
                 <Select
@@ -220,7 +244,8 @@ export default function Controls() {
               </div>
             )}
 
-            {method === "direct" && size === 12 && (
+            {((method === "direct" && size === 12) ||
+              (method === "auto" && autoResolvedMethod === "direct" && size === 12)) && (
               <div>
                 <Label htmlFor="direct4x4">4×4 component method</Label>
                 <Select
