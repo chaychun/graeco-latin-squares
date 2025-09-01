@@ -12,11 +12,14 @@ import {
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { primePowerDecomposition } from "@/lib/core/finite-field"
-import { areMultipliersValid, getAllMultipliers } from "@/lib/core/graeco-latin/graeco-latin"
 import type { Method } from "@/lib/core/graeco-latin/graeco-latin-store"
-import { useGraecoLatinStore } from "@/lib/core/graeco-latin/graeco-latin-store"
-import { isMethodValid } from "@/lib/core/graeco-latin/validation"
+import {
+  getAutoResolvedMethod,
+  getGreekMultiplierOptions,
+  getLatinMultiplierOptions,
+  getMethodDisabled,
+  useGraecoLatinStore,
+} from "@/lib/core/graeco-latin/graeco-latin-store"
 import { usePaletteStore } from "@/lib/palette/palette-store"
 import {
   GRAYSCALE_PALETTE,
@@ -51,27 +54,7 @@ export default function Controls() {
     setPaletteSeed,
   } = usePaletteStore()
 
-  const availableMultipliers = getAllMultipliers(size)
-
-  const autoResolvedMethod = (() => {
-    if (size === 12) return "direct"
-    if (size === 4) return "difference"
-    const dec = primePowerDecomposition(size)
-    if (size % 2 === 0) {
-      if (size === 10) return "difference"
-      return dec ? "finite" : "finite"
-    }
-    if (dec && dec.k > 1) return "finite"
-    return "cyclic"
-  })()
-
-  const getAvailableMultipliers = (exclude: number, forGreek = false) => {
-    return availableMultipliers.filter((m) => {
-      if (m === exclude) return false
-      const other = forGreek ? latinMultiplier : greekMultiplier
-      return areMultipliersValid(m, other, size)
-    })
-  }
+  const autoResolvedMethod = getAutoResolvedMethod(size)
 
   const basePalette =
     paletteType === "pastel"
@@ -174,16 +157,16 @@ export default function Controls() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="auto">Auto</SelectItem>
-                  <SelectItem value="finite" disabled={!isMethodValid("finite", size)}>
+                  <SelectItem value="finite" disabled={getMethodDisabled("finite", size)}>
                     Finite Field
                   </SelectItem>
-                  <SelectItem value="cyclic" disabled={!isMethodValid("cyclic", size)}>
+                  <SelectItem value="cyclic" disabled={getMethodDisabled("cyclic", size)}>
                     Cyclic
                   </SelectItem>
-                  <SelectItem value="difference" disabled={!isMethodValid("difference", size)}>
+                  <SelectItem value="difference" disabled={getMethodDisabled("difference", size)}>
                     Method of Difference
                   </SelectItem>
-                  <SelectItem value="direct" disabled={!isMethodValid("direct", size)}>
+                  <SelectItem value="direct" disabled={getMethodDisabled("direct", size)}>
                     Direct Product
                   </SelectItem>
                 </SelectContent>
@@ -213,7 +196,7 @@ export default function Controls() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {getAvailableMultipliers(greekMultiplier, false).map((multiplier) => (
+                    {getLatinMultiplierOptions(size, greekMultiplier).map((multiplier) => (
                       <SelectItem key={multiplier} value={multiplier.toString()}>
                         {multiplier}
                       </SelectItem>
@@ -234,7 +217,7 @@ export default function Controls() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {getAvailableMultipliers(latinMultiplier, true).map((multiplier) => (
+                    {getGreekMultiplierOptions(size, latinMultiplier).map((multiplier) => (
                       <SelectItem key={multiplier} value={multiplier.toString()}>
                         {multiplier}
                       </SelectItem>

@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { areMultipliersValid, getAllMultipliers } from "./graeco-latin"
-import { validateMethod } from "./validation"
+import { isMethodValid, resolveAutoMethod, validateMethod } from "./validation"
 
 export type Method = "auto" | "finite" | "cyclic" | "difference" | "direct"
 
@@ -83,3 +83,22 @@ export const useGraecoLatinStore = create<GraecoLatinState>((set) => ({
     }),
   setDirect4x4Method: (direct4x4Method: "finite" | "difference") => set({ direct4x4Method }),
 }))
+
+export const getLatinMultiplierOptions = (size: number, greekMultiplier: number) => {
+  const candidates = getAllMultipliers(size)
+  return candidates.filter(
+    (m) => m !== greekMultiplier && areMultipliersValid(m, greekMultiplier, size)
+  )
+}
+
+export const getGreekMultiplierOptions = (size: number, latinMultiplier: number) => {
+  const candidates = getAllMultipliers(size)
+  return candidates.filter(
+    (m) => m !== latinMultiplier && areMultipliersValid(latinMultiplier, m, size)
+  )
+}
+
+export const getAutoResolvedMethod = (size: number): Method => resolveAutoMethod(size)
+
+export const getMethodDisabled = (method: Method, size: number): boolean =>
+  !isMethodValid(method, size)
