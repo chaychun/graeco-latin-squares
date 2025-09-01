@@ -1,14 +1,16 @@
 # Graeco-Latin Square Art Generator
 
-Generate beautiful geometric art using orthogonal Latin squares. Each cell contains a unique combination of background and foreground colors arranged in mathematical harmony.
+Generate geometric art from orthogonal Latin squares. Each cell pairs a background and foreground color.
 
 ## Features
 
-- **Mathematical Construction**: Based on Graeco-Latin squares with orthogonal Latin multipliers
-- **Interactive Controls**: Adjust grid size (3×3, 5×5, 7×7, 9×9), multipliers, and color palettes
-- **Color Palettes**: Choose between pastel or grayscale palettes
-- **Color Shifting**: Rotate background and foreground color assignments
-- **Export Options**: Download generated art as SVG or PNG
+- **Sizes**: 3–13 (excluding 6×6)
+- **Methods**: Auto, Finite Field, Cyclic, Method of Difference, Direct Product
+- **Cyclic controls**: Adjust Latin/Greek multipliers when using the cyclic method
+- **12×12 option**: Choose 4×4 component via Finite Field or Method of Difference
+- **Palettes**: Pastel, Grayscale, Scientific American ’59
+- **Color tools**: Independent background/foreground shifts, deterministic shuffle with seed, reset
+- **Export**: Download SVG or PNG
 
 ## Tech Stack
 
@@ -24,11 +26,11 @@ pnpm install
 pnpm dev
 ```
 
-## Mathematical Background
+## Supported methods
 
-A Graeco-Latin square is a mathematical arrangement where each cell contains a unique ordered pair (Latin symbol, Greek symbol). This implementation uses the construction:
+- **Finite Field**: Standard GF(q) construction for prime powers
+- **Cyclic**: Classical cyclic construction for odd orders
+- **Method of Difference**: Bose–Shrikhande–Parker (1960)
+- **Direct Product**: Product of orthogonal Latin squares (e.g., 3×3 × 4×4 → 12×12)
 
-- **Latin Square**: L(i,j) = (i + a·j) mod n
-- **Greek Square**: G(i,j) = (i + b·j) mod n
-
-Where n is odd and the multipliers a and b satisfy gcd(|b-a|, n) = 1.
+Further methods will be added in the future that expands the possibility of square sizes.
