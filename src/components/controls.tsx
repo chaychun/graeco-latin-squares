@@ -14,7 +14,10 @@ import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 // removed unused primePowerDecomposition import
 import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
+import type { Method } from "@/lib/graeco-latin-store"
+import { useGraecoLatinStore } from "@/lib/graeco-latin-store"
 import { isMethodValid, validateMethod } from "@/lib/method-validation"
+import { usePaletteStore } from "@/lib/palette-store"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -22,31 +25,31 @@ import {
   shiftPalette,
   shufflePalette,
 } from "@/lib/palettes"
-import type { Method } from "@/lib/store"
-import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Controls() {
   const [sixHelpOpen, setSixHelpOpen] = useState(false)
   const {
     size,
-    paletteType,
-    backgroundShift,
-    foregroundShift,
-    paletteSeed,
     latinMultiplier,
     greekMultiplier,
     method,
     direct4x4Method,
     setSize,
-    setPaletteType,
-    setBackgroundShift,
-    setForegroundShift,
-    setPaletteSeed,
     setLatinMultiplier,
     setGreekMultiplier,
     setMethod,
     setDirect4x4Method,
   } = useGraecoLatinStore()
+  const {
+    paletteType,
+    backgroundShift,
+    foregroundShift,
+    paletteSeed,
+    setPaletteType,
+    setBackgroundShift,
+    setForegroundShift,
+    setPaletteSeed,
+  } = usePaletteStore()
 
   const availableMultipliers = getAllMultipliers(size)
 

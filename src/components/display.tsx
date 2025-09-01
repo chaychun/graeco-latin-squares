@@ -11,7 +11,9 @@ import {
   generateGraecoLatinAuto,
   generateMethodOfDifferenceGraecoLatin,
 } from "@/lib/graeco-latin"
+import { useGraecoLatinStore } from "@/lib/graeco-latin-store"
 import { isMethodValid } from "@/lib/method-validation"
+import { usePaletteStore } from "@/lib/palette-store"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
@@ -19,20 +21,10 @@ import {
   shiftPalette,
   shufflePalette,
 } from "@/lib/palettes"
-import { useGraecoLatinStore } from "@/lib/store"
 
 export default function Display() {
-  const {
-    size,
-    paletteType,
-    backgroundShift,
-    foregroundShift,
-    paletteSeed,
-    latinMultiplier,
-    greekMultiplier,
-    method,
-    direct4x4Method,
-  } = useGraecoLatinStore()
+  const { size, latinMultiplier, greekMultiplier, method, direct4x4Method } = useGraecoLatinStore()
+  const { paletteType, backgroundShift, foregroundShift, paletteSeed } = usePaletteStore()
 
   const svgRef = useRef<SVGSVGElement>(null)
 

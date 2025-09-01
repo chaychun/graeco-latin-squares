@@ -1,6 +1,6 @@
 import { primePowerDecomposition } from "./finite-field"
 import { isMethodOfDifferenceSupported } from "./graeco-latin"
-import type { Method } from "./store"
+import type { Method } from "./graeco-latin-store"
 
 export function isMethodValid(method: Method, size: number): boolean {
   if (method === "auto") return true
@@ -14,4 +14,3 @@ export function isMethodValid(method: Method, size: number): boolean {
 export function validateMethod(method: Method, size: number): Method {
   return isMethodValid(method, size) ? method : "auto"
 }
-
