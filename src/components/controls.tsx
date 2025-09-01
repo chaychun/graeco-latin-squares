@@ -16,7 +16,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
 import type { Method } from "@/lib/graeco-latin-store"
 import { useGraecoLatinStore } from "@/lib/graeco-latin-store"
-import { isMethodValid, validateMethod } from "@/lib/method-validation"
+import { isMethodValid } from "@/lib/method-validation"
 import { usePaletteStore } from "@/lib/palette-store"
 import {
   GRAYSCALE_PALETTE,
@@ -52,24 +52,6 @@ export default function Controls() {
   } = usePaletteStore()
 
   const availableMultipliers = getAllMultipliers(size)
-
-  const handleSizeChange = (newSize: number) => {
-    setSize(newSize)
-    const adjusted = validateMethod(method, newSize)
-    if (adjusted !== method) setMethod(adjusted)
-    const newMultipliers = getAllMultipliers(newSize)
-    if (!newMultipliers.includes(latinMultiplier)) {
-      setLatinMultiplier(newMultipliers[0] || 1)
-    }
-    if (!newMultipliers.includes(greekMultiplier)) {
-      const fallback =
-        newMultipliers.find((m) => m !== latinMultiplier) ||
-        newMultipliers[1] ||
-        newMultipliers[0] ||
-        1
-      setGreekMultiplier(fallback)
-    }
-  }
 
   const getAvailableMultipliers = (exclude: number, forGreek = false) => {
     return availableMultipliers.filter((m) => {
@@ -113,9 +95,8 @@ export default function Controls() {
               <Select
                 value={size.toString()}
                 onValueChange={(value) => {
-                  if (value === "6") return
                   setSixHelpOpen(false)
-                  handleSizeChange(Number.parseInt(value, 10))
+                  setSize(Number.parseInt(value, 10))
                 }}
                 onOpenChange={(open) => {
                   if (!open) setSixHelpOpen(false)

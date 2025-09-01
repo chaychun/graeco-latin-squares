@@ -12,7 +12,6 @@ import {
   generateMethodOfDifferenceGraecoLatin,
 } from "@/lib/graeco-latin"
 import { useGraecoLatinStore } from "@/lib/graeco-latin-store"
-import { isMethodValid } from "@/lib/method-validation"
 import { usePaletteStore } from "@/lib/palette-store"
 import {
   GRAYSCALE_PALETTE,
@@ -31,12 +30,8 @@ export default function Display() {
   let square: GraecoLatinSquare
   if (method === "difference") {
     const m = (size - 1) / 3
-    if (isMethodValid("difference", size)) {
-      square = generateMethodOfDifferenceGraecoLatin(m)
-    } else {
-      square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
-    }
-  } else if (method === "direct" && size === 12) {
+    square = generateMethodOfDifferenceGraecoLatin(m)
+  } else if (method === "direct") {
     const A = generateCyclicGraecoLatin(3)
     const B =
       direct4x4Method === "difference"
@@ -44,11 +39,7 @@ export default function Display() {
         : generateFiniteFieldGraecoLatin(4)!
     square = directProductGraecoLatin(A, B)
   } else if (method === "finite") {
-    const ff = generateFiniteFieldGraecoLatin(size)
-    if (ff) square = ff
-    else if (size % 2 !== 0)
-      square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
-    else square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+    square = generateFiniteFieldGraecoLatin(size)!
   } else if (method === "cyclic") {
     square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
   } else {
