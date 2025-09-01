@@ -12,7 +12,7 @@ import {
   polySub,
   primePowerDecomposition,
   toVector,
-} from "./finite-field"
+} from "../finite-field"
 
 export function getAllMultipliers(n: number): number[] {
   const multipliers: number[] = []

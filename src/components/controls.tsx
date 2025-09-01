@@ -13,60 +13,45 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 // removed unused primePowerDecomposition import
-import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
-import { isMethodValid, validateMethod } from "@/lib/method-validation"
+import { areMultipliersValid, getAllMultipliers } from "@/lib/core/graeco-latin/graeco-latin"
+import type { Method } from "@/lib/core/graeco-latin/graeco-latin-store"
+import { useGraecoLatinStore } from "@/lib/core/graeco-latin/graeco-latin-store"
+import { isMethodValid } from "@/lib/core/graeco-latin/validation"
+import { usePaletteStore } from "@/lib/palette/palette-store"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
   shufflePalette,
-} from "@/lib/palettes"
-import type { Method } from "@/lib/store"
-import { useGraecoLatinStore } from "@/lib/store"
+} from "@/lib/palette/palettes"
 
 export default function Controls() {
   const [sixHelpOpen, setSixHelpOpen] = useState(false)
   const {
     size,
-    paletteType,
-    backgroundShift,
-    foregroundShift,
-    paletteSeed,
     latinMultiplier,
     greekMultiplier,
     method,
     direct4x4Method,
     setSize,
-    setPaletteType,
-    setBackgroundShift,
-    setForegroundShift,
-    setPaletteSeed,
     setLatinMultiplier,
     setGreekMultiplier,
     setMethod,
     setDirect4x4Method,
   } = useGraecoLatinStore()
+  const {
+    paletteType,
+    backgroundShift,
+    foregroundShift,
+    paletteSeed,
+    setPaletteType,
+    setBackgroundShift,
+    setForegroundShift,
+    setPaletteSeed,
+  } = usePaletteStore()
 
   const availableMultipliers = getAllMultipliers(size)
-
-  const handleSizeChange = (newSize: number) => {
-    setSize(newSize)
-    const adjusted = validateMethod(method, newSize)
-    if (adjusted !== method) setMethod(adjusted)
-    const newMultipliers = getAllMultipliers(newSize)
-    if (!newMultipliers.includes(latinMultiplier)) {
-      setLatinMultiplier(newMultipliers[0] || 1)
-    }
-    if (!newMultipliers.includes(greekMultiplier)) {
-      const fallback =
-        newMultipliers.find((m) => m !== latinMultiplier) ||
-        newMultipliers[1] ||
-        newMultipliers[0] ||
-        1
-      setGreekMultiplier(fallback)
-    }
-  }
 
   const getAvailableMultipliers = (exclude: number, forGreek = false) => {
     return availableMultipliers.filter((m) => {
@@ -110,9 +95,8 @@ export default function Controls() {
               <Select
                 value={size.toString()}
                 onValueChange={(value) => {
-                  if (value === "6") return
                   setSixHelpOpen(false)
-                  handleSizeChange(Number.parseInt(value, 10))
+                  setSize(Number.parseInt(value, 10))
                 }}
                 onOpenChange={(open) => {
                   if (!open) setSixHelpOpen(false)

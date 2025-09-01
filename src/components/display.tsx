@@ -2,7 +2,6 @@ import { Download } from "lucide-react"
 import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { downloadPNG, downloadSVG } from "@/lib/downloads"
 import {
   directProductGraecoLatin,
   type GraecoLatinSquare,
@@ -10,41 +9,29 @@ import {
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
   generateMethodOfDifferenceGraecoLatin,
-} from "@/lib/graeco-latin"
-import { isMethodValid } from "@/lib/method-validation"
+} from "@/lib/core/graeco-latin/graeco-latin"
+import { useGraecoLatinStore } from "@/lib/core/graeco-latin/graeco-latin-store"
+import { downloadPNG, downloadSVG } from "@/lib/export/downloads"
+import { usePaletteStore } from "@/lib/palette/palette-store"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
   shufflePalette,
-} from "@/lib/palettes"
-import { useGraecoLatinStore } from "@/lib/store"
+} from "@/lib/palette/palettes"
 
 export default function Display() {
-  const {
-    size,
-    paletteType,
-    backgroundShift,
-    foregroundShift,
-    paletteSeed,
-    latinMultiplier,
-    greekMultiplier,
-    method,
-    direct4x4Method,
-  } = useGraecoLatinStore()
+  const { size, latinMultiplier, greekMultiplier, method, direct4x4Method } = useGraecoLatinStore()
+  const { paletteType, backgroundShift, foregroundShift, paletteSeed } = usePaletteStore()
 
   const svgRef = useRef<SVGSVGElement>(null)
 
   let square: GraecoLatinSquare
   if (method === "difference") {
     const m = (size - 1) / 3
-    if (isMethodValid("difference", size)) {
-      square = generateMethodOfDifferenceGraecoLatin(m)
-    } else {
-      square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
-    }
-  } else if (method === "direct" && size === 12) {
+    square = generateMethodOfDifferenceGraecoLatin(m)
+  } else if (method === "direct") {
     const A = generateCyclicGraecoLatin(3)
     const B =
       direct4x4Method === "difference"
@@ -52,11 +39,7 @@ export default function Display() {
         : generateFiniteFieldGraecoLatin(4)!
     square = directProductGraecoLatin(A, B)
   } else if (method === "finite") {
-    const ff = generateFiniteFieldGraecoLatin(size)
-    if (ff) square = ff
-    else if (size % 2 !== 0)
-      square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
-    else square = generateGraecoLatinAuto(size, { latinMultiplier, greekMultiplier })
+    square = generateFiniteFieldGraecoLatin(size)!
   } else if (method === "cyclic") {
     square = generateCyclicGraecoLatin(size, latinMultiplier, greekMultiplier)
   } else {
