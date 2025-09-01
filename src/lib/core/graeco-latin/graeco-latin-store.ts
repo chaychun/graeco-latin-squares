@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { areMultipliersValid, getAllMultipliers } from "./graeco-latin"
-import { validateMethod } from "./method-validation"
+import { validateMethod } from "./validation"
 
 export type Method = "auto" | "finite" | "cyclic" | "difference" | "direct"
 

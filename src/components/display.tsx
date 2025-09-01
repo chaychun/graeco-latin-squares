@@ -2,7 +2,6 @@ import { Download } from "lucide-react"
 import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { downloadPNG, downloadSVG } from "@/lib/downloads"
 import {
   directProductGraecoLatin,
   type GraecoLatinSquare,
@@ -10,16 +9,17 @@ import {
   generateFiniteFieldGraecoLatin,
   generateGraecoLatinAuto,
   generateMethodOfDifferenceGraecoLatin,
-} from "@/lib/graeco-latin"
-import { useGraecoLatinStore } from "@/lib/graeco-latin-store"
-import { usePaletteStore } from "@/lib/palette-store"
+} from "@/lib/core/graeco-latin/graeco-latin"
+import { useGraecoLatinStore } from "@/lib/core/graeco-latin/graeco-latin-store"
+import { downloadPNG, downloadSVG } from "@/lib/export/downloads"
+import { usePaletteStore } from "@/lib/palette/palette-store"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
   shufflePalette,
-} from "@/lib/palettes"
+} from "@/lib/palette/palettes"
 
 export default function Display() {
   const { size, latinMultiplier, greekMultiplier, method, direct4x4Method } = useGraecoLatinStore()

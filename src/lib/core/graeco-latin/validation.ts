@@ -1,4 +1,4 @@
-import { primePowerDecomposition } from "./finite-field"
+import { primePowerDecomposition } from "../finite-field"
 import { isMethodOfDifferenceSupported } from "./graeco-latin"
 import type { Method } from "./graeco-latin-store"
 

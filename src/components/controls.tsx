@@ -13,18 +13,18 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 // removed unused primePowerDecomposition import
-import { areMultipliersValid, getAllMultipliers } from "@/lib/graeco-latin"
-import type { Method } from "@/lib/graeco-latin-store"
-import { useGraecoLatinStore } from "@/lib/graeco-latin-store"
-import { isMethodValid } from "@/lib/method-validation"
-import { usePaletteStore } from "@/lib/palette-store"
+import { areMultipliersValid, getAllMultipliers } from "@/lib/core/graeco-latin/graeco-latin"
+import type { Method } from "@/lib/core/graeco-latin/graeco-latin-store"
+import { useGraecoLatinStore } from "@/lib/core/graeco-latin/graeco-latin-store"
+import { isMethodValid } from "@/lib/core/graeco-latin/validation"
+import { usePaletteStore } from "@/lib/palette/palette-store"
 import {
   GRAYSCALE_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
   shufflePalette,
-} from "@/lib/palettes"
+} from "@/lib/palette/palettes"
 
 export default function Controls() {
   const [sixHelpOpen, setSixHelpOpen] = useState(false)
