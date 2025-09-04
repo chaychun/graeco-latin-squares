@@ -129,9 +129,9 @@ export default function Controls() {
                               e.stopPropagation()
                               e.preventDefault()
                             }}
-                            className="inline-flex items-center"
+                            className="inline-flex items-center text-inherit"
                           >
-                            <InfoBox className="h-4 w-4" />
+                            <InfoBox className="h-4 w-4 text-inherit" />
                           </button>
                         </TooltipTrigger>
                         <TooltipContent sideOffset={6} className="max-w-[380px] lg:max-w-none">
