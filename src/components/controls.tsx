@@ -1,4 +1,7 @@
-import { HelpCircle, Palette, RotateCcw, Shuffle } from "lucide-react"
+import ColorsSwatch from "pixelarticons/svg/colors-swatch.svg?react"
+import InfoBox from "pixelarticons/svg/info-box.svg?react"
+import Shuffle from "pixelarticons/svg/shuffle.svg?react"
+import Undo from "pixelarticons/svg/undo.svg?react"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -81,7 +84,7 @@ export default function Controls() {
       <div className="space-y-6 pr-4 pb-6">
         <div>
           <h3 className="mb-4 flex items-center gap-2 font-semibold text-lg">
-            <Palette className="h-5 w-5" />
+            <ColorsSwatch className="h-5 w-5" />
             Controls
           </h3>
           <div className="space-y-6">
@@ -128,7 +131,7 @@ export default function Controls() {
                             }}
                             className="inline-flex items-center"
                           >
-                            <HelpCircle className="h-4 w-4" />
+                            <InfoBox className="h-4 w-4" />
                           </button>
                         </TooltipTrigger>
                         <TooltipContent sideOffset={6} className="max-w-[380px] lg:max-w-none">
@@ -258,7 +261,7 @@ export default function Controls() {
                     variant="outline"
                     size="sm"
                   >
-                    <RotateCcw className="h-4 w-4" />
+                    <Undo className="h-4 w-4" />
                     Reset
                   </Button>
                   <Button

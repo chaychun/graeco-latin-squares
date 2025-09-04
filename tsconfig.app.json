@@ -25,7 +25,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "pixelarticons/svg/*": ["./node_modules/pixelarticons/svg/*"]
     }
   },
   "include": ["src"]
