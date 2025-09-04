@@ -108,7 +108,7 @@ export default function Display() {
       <div className="mt-4 flex gap-2">
         <Button
           onClick={() => downloadSVG(svgRef.current, size)}
-          className="flex-1 bg-white"
+          className="flex-1 bg-background"
           variant="outline"
         >
           <Download className="mr-2 h-4 w-4" />
@@ -116,7 +116,7 @@ export default function Display() {
         </Button>
         <Button
           onClick={() => downloadPNG(svgRef.current, svgSize, size)}
-          className="flex-1 bg-white"
+          className="flex-1 bg-background"
           variant="outline"
         >
           <Download className="mr-2 h-4 w-4" />
