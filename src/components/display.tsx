@@ -1,4 +1,4 @@
-import { Download } from "lucide-react"
+import Download from "pixelarticons/svg/download.svg?react"
 import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
