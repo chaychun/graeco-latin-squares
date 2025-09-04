@@ -1,7 +1,7 @@
 import Download from "pixelarticons/svg/download.svg?react"
 import { useRef } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   directProductGraecoLatin,
   type GraecoLatinSquare,
@@ -63,6 +63,9 @@ export default function Display() {
   return (
     <div className="w-full max-w-full lg:max-w-lg xl:max-w-xl">
       <Card>
+        <CardHeader>
+          <CardTitle>Result</CardTitle>
+        </CardHeader>
         <CardContent className="flex justify-center">
           <div className="mx-auto aspect-square w-full max-w-sm sm:max-w-md lg:max-w-full">
             <svg

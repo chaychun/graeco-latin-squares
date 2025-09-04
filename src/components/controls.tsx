@@ -350,7 +350,7 @@ export default function Controls() {
               value="square"
               className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
             >
-              Squares
+              Square
             </TabsTrigger>
             <TabsTrigger
               value="palette"
@@ -375,7 +375,7 @@ export default function Controls() {
       <div className="hidden lg:flex lg:flex-col lg:gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Squares</CardTitle>
+            <CardTitle>Square</CardTitle>
           </CardHeader>
           <CardContent>{SquareControls}</CardContent>
         </Card>
