@@ -1,7 +1,7 @@
 import InfoBox from "pixelarticons/svg/info-box.svg?react"
 import Shuffle from "pixelarticons/svg/shuffle.svg?react"
 import Undo from "pixelarticons/svg/undo.svg?react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
@@ -32,6 +32,18 @@ import {
   shiftPalette,
   shufflePalette,
 } from "@/lib/palette/palettes"
+
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(false)
+  useEffect(() => {
+    const mql = window.matchMedia(query)
+    const onChange = (e: MediaQueryListEvent) => setMatches(e.matches)
+    setMatches(mql.matches)
+    mql.addEventListener("change", onChange)
+    return () => mql.removeEventListener("change", onChange)
+  }, [query])
+  return matches
+}
 
 export default function Controls() {
   const [sixHelpOpen, setSixHelpOpen] = useState(false)
@@ -79,6 +91,8 @@ export default function Controls() {
   const resetPalette = () => {
     setPaletteSeed(0)
   }
+
+  const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   const SquareControls = (
     <div className="space-y-6">
@@ -343,49 +357,57 @@ export default function Controls() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-full min-h-0 flex-col overflow-hidden lg:hidden">
-        <Tabs defaultValue="square" className="flex h-full flex-col gap-0">
-          <TabsList className="w-full rounded-none bg-transparent p-0">
-            <TabsTrigger
+      {isDesktop ? (
+        <div className="flex flex-col gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Square</CardTitle>
+            </CardHeader>
+            <CardContent>{SquareControls}</CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Palette</CardTitle>
+            </CardHeader>
+            <CardContent>{PaletteControls}</CardContent>
+          </Card>
+        </div>
+      ) : (
+        <div className="flex h-full min-h-0 flex-col overflow-hidden">
+          <Tabs defaultValue="square" className="flex h-full flex-col gap-0">
+            <TabsList className="w-full rounded-none bg-transparent p-0">
+              <TabsTrigger
+                value="square"
+                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              >
+                Square
+              </TabsTrigger>
+              <TabsTrigger
+                value="palette"
+                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              >
+                Palette
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent
               value="square"
-              className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              className="flex-1 overflow-hidden border border-t-0 bg-card"
             >
-              Square
-            </TabsTrigger>
-            <TabsTrigger
+              <ScrollArea className="h-full">
+                <div className="p-4 pr-4 pb-6">{SquareControls}</div>
+              </ScrollArea>
+            </TabsContent>
+            <TabsContent
               value="palette"
-              className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+              className="flex-1 overflow-hidden border border-t-0 bg-card"
             >
-              Palette
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="square" className="flex-1 overflow-hidden border border-t-0 bg-card">
-            <ScrollArea className="h-full">
-              <div className="p-4 pr-4 pb-6">{SquareControls}</div>
-            </ScrollArea>
-          </TabsContent>
-          <TabsContent value="palette" className="flex-1 overflow-hidden border border-t-0 bg-card">
-            <ScrollArea className="h-full">
-              <div className="p-4 pr-4 pb-6">{PaletteControls}</div>
-            </ScrollArea>
-          </TabsContent>
-        </Tabs>
-      </div>
-
-      <div className="hidden lg:flex lg:flex-col lg:gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Square</CardTitle>
-          </CardHeader>
-          <CardContent>{SquareControls}</CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Palette</CardTitle>
-          </CardHeader>
-          <CardContent>{PaletteControls}</CardContent>
-        </Card>
-      </div>
+              <ScrollArea className="h-full">
+                <div className="p-4 pr-4 pb-6">{PaletteControls}</div>
+              </ScrollArea>
+            </TabsContent>
+          </Tabs>
+        </div>
+      )}
     </div>
   )
 }
