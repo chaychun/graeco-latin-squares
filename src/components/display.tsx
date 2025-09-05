@@ -64,9 +64,9 @@ export default function Display() {
     <div className="w-full max-w-full lg:max-w-lg xl:max-w-xl">
       <Card>
         <CardHeader>
-          <CardTitle>Result</CardTitle>
+          <CardTitle>Graeco-Latin Square</CardTitle>
         </CardHeader>
-        <CardContent className="flex justify-center">
+        <CardContent className="flex justify-center p-4">
           <div className="mx-auto aspect-square w-full max-w-sm sm:max-w-md lg:max-w-full">
             <svg
               ref={svgRef}
@@ -108,7 +108,7 @@ export default function Display() {
           </div>
         </CardContent>
       </Card>
-      <div className="mt-4 flex gap-2">
+      <div className="mt-4 flex gap-4">
         <Button
           onClick={() => downloadSVG(svgRef.current, size)}
           className="flex-1 bg-background"
