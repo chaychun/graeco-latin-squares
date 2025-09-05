@@ -26,7 +26,9 @@ import {
 } from "@/lib/core/graeco-latin/graeco-latin-store"
 import { usePaletteStore } from "@/lib/palette/palette-store"
 import {
+  GLACIER_PALETTE,
   GRAYSCALE_PALETTE,
+  NORD_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
 } from "@/lib/palette/palettes"
@@ -75,7 +77,11 @@ export default function Controls() {
       ? PASTEL_PALETTE
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
-        : SCIENTIFIC_AMERICAN_59_PALETTE
+        : paletteType === "scientific_american_59"
+          ? SCIENTIFIC_AMERICAN_59_PALETTE
+          : paletteType === "nord"
+            ? NORD_PALETTE
+            : GLACIER_PALETTE
 
   const randomizePalette = () => {
     const seed = Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)
@@ -267,15 +273,21 @@ export default function Controls() {
           <Select
             value={paletteType}
             onValueChange={(value) =>
-              setPaletteType(value as "pastel" | "grayscale" | "scientific_american_59")
+              setPaletteType(
+                value as "pastel" | "grayscale" | "scientific_american_59" | "nord" | "glacier"
+              )
             }
           >
             <SelectTrigger className="bg-background">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="pastel">Pastel</SelectItem>
+              <SelectItem value="nord">
+                Nord <span className="text-current opacity-60">(Default)</span>
+              </SelectItem>
+              <SelectItem value="glacier">Glacier</SelectItem>
               <SelectItem value="grayscale">Grayscale</SelectItem>
+              <SelectItem value="pastel">Pastel</SelectItem>
               <SelectItem value="scientific_american_59">Scientific American '59</SelectItem>
             </SelectContent>
           </Select>

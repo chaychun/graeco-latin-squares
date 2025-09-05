@@ -14,7 +14,9 @@ import { useGraecoLatinStore } from "@/lib/core/graeco-latin/graeco-latin-store"
 import { downloadPNG, downloadSVG } from "@/lib/export/downloads"
 import { usePaletteStore } from "@/lib/palette/palette-store"
 import {
+  GLACIER_PALETTE,
   GRAYSCALE_PALETTE,
+  NORD_PALETTE,
   PASTEL_PALETTE,
   SCIENTIFIC_AMERICAN_59_PALETTE,
   shiftPalette,
@@ -50,7 +52,11 @@ export default function Display() {
       ? PASTEL_PALETTE
       : paletteType === "grayscale"
         ? GRAYSCALE_PALETTE
-        : SCIENTIFIC_AMERICAN_59_PALETTE
+        : paletteType === "scientific_american_59"
+          ? SCIENTIFIC_AMERICAN_59_PALETTE
+          : paletteType === "nord"
+            ? NORD_PALETTE
+            : GLACIER_PALETTE
   const effectivePalette =
     paletteSeed === 0 ? basePalette : shufflePalette(basePalette, paletteSeed)
   const backgroundColors = shiftPalette(effectivePalette, backgroundShift).slice(0, size)

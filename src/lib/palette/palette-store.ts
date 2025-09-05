@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-type PaletteType = "pastel" | "grayscale" | "scientific_american_59"
+type PaletteType = "pastel" | "grayscale" | "scientific_american_59" | "nord" | "glacier"
 
 interface PaletteState {
   paletteType: PaletteType
@@ -14,7 +14,7 @@ interface PaletteState {
 }
 
 export const usePaletteStore = create<PaletteState>((set) => ({
-  paletteType: "pastel",
+  paletteType: "nord",
   backgroundShift: 0,
   foregroundShift: 0,
   paletteSeed: 0,
