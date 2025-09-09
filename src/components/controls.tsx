@@ -283,12 +283,122 @@ export default function Controls() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="nord">
-                Nord <span className="text-current opacity-60">(Default)</span>
+                <span className="inline-flex w-full items-center whitespace-nowrap">
+                  <span>
+                    Nord <span className="text-current opacity-60">(Default)</span>
+                  </span>
+                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
               </SelectItem>
-              <SelectItem value="glacier">Glacier</SelectItem>
-              <SelectItem value="grayscale">Grayscale</SelectItem>
-              <SelectItem value="pastel">Pastel</SelectItem>
-              <SelectItem value="scientific_american_59">Scientific American '59</SelectItem>
+              <SelectItem value="glacier">
+                <span className="inline-flex w-full items-center whitespace-nowrap">
+                  <span>Glacier</span>
+                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
+              <SelectItem value="grayscale">
+                <span className="inline-flex w-full items-center whitespace-nowrap">
+                  <span>Grayscale</span>
+                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
+              <SelectItem value="pastel">
+                <span className="inline-flex w-full items-center whitespace-nowrap">
+                  <span>Pastel</span>
+                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
+              <SelectItem value="scientific_american_59">
+                <span className="inline-flex w-full items-center whitespace-nowrap">
+                  <span>Scientific American '59</span>
+                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
             </SelectContent>
           </Select>
           <div className="flex items-center gap-2">
