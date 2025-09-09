@@ -283,11 +283,11 @@ export default function Controls() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="nord">
-                <span className="inline-flex w-full items-center whitespace-nowrap">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>
                     Nord <span className="text-current opacity-60">(Default)</span>
                   </span>
-                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: NORD_PALETTE[0] }}
@@ -308,9 +308,9 @@ export default function Controls() {
                 </span>
               </SelectItem>
               <SelectItem value="glacier">
-                <span className="inline-flex w-full items-center whitespace-nowrap">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>Glacier</span>
-                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: GLACIER_PALETTE[0] }}
@@ -331,9 +331,9 @@ export default function Controls() {
                 </span>
               </SelectItem>
               <SelectItem value="grayscale">
-                <span className="inline-flex w-full items-center whitespace-nowrap">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>Grayscale</span>
-                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: GRAYSCALE_PALETTE[0] }}
@@ -354,9 +354,9 @@ export default function Controls() {
                 </span>
               </SelectItem>
               <SelectItem value="pastel">
-                <span className="inline-flex w-full items-center whitespace-nowrap">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>Pastel</span>
-                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: PASTEL_PALETTE[0] }}
@@ -377,9 +377,9 @@ export default function Controls() {
                 </span>
               </SelectItem>
               <SelectItem value="scientific_american_59">
-                <span className="inline-flex w-full items-center whitespace-nowrap">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>Scientific American '59</span>
-                  <span className="ml-auto mr-6 inline-flex items-center gap-1">
+                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[0] }}
