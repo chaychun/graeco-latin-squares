@@ -337,13 +337,17 @@ export default function Controls() {
         <div className="flex flex-col gap-4">
           <Card>
             <CardHeader>
-              <CardTitle>Square</CardTitle>
+              <div className="bg-card px-2">
+                <CardTitle>Square</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>{SquareControls}</CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Palette</CardTitle>
+              <div className="bg-card px-2">
+                <CardTitle>Palette</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>{PaletteControls}</CardContent>
           </Card>
