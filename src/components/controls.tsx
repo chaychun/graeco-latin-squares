@@ -282,12 +282,12 @@ export default function Controls() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="nord">
+              <SelectItem value="nord" className="relative">
                 <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>
                     Nord <span className="text-current opacity-60">(Default)</span>
                   </span>
-                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: NORD_PALETTE[0] }}
@@ -307,10 +307,10 @@ export default function Controls() {
                   </span>
                 </span>
               </SelectItem>
-              <SelectItem value="glacier">
+              <SelectItem value="glacier" className="relative">
                 <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>Glacier</span>
-                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: GLACIER_PALETTE[0] }}
@@ -330,10 +330,10 @@ export default function Controls() {
                   </span>
                 </span>
               </SelectItem>
-              <SelectItem value="grayscale">
+              <SelectItem value="grayscale" className="relative">
                 <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>Grayscale</span>
-                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: GRAYSCALE_PALETTE[0] }}
@@ -353,10 +353,10 @@ export default function Controls() {
                   </span>
                 </span>
               </SelectItem>
-              <SelectItem value="pastel">
+              <SelectItem value="pastel" className="relative">
                 <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
                   <span>Pastel</span>
-                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: PASTEL_PALETTE[0] }}
@@ -376,10 +376,10 @@ export default function Controls() {
                   </span>
                 </span>
               </SelectItem>
-              <SelectItem value="scientific_american_59">
+              <SelectItem value="scientific_american_59" className="relative">
                 <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
-                  <span>Scientific American '59</span>
-                  <span className="pointer-events-none absolute right-8 top-1/2 inline-flex -translate-y-1/2 items-center gap-1">
+                  <span>Sci Am '59</span>
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
                     <span
                       className="h-3 w-3 rounded-sm border border-border"
                       style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[0] }}
