@@ -26,7 +26,7 @@ function CardHeader({ className, children, ...props }: React.ComponentProps<"div
           backgroundSize: "100% 4px",
         }}
       >
-        <div className="ml-8 inline-block bg-card px-2 text-center">{children}</div>
+        <div className="ml-8 flex w-full items-center justify-between">{children}</div>
       </div>
     </div>
   )
