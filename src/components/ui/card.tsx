@@ -20,13 +20,15 @@ function CardHeader({ className, children, ...props }: React.ComponentProps<"div
       {...props}
     >
       <div
-        className="flex items-center"
+        className="flex items-center dark:text-muted-foreground"
         style={{
           backgroundImage: "linear-gradient(currentColor 50%, rgba(0,0,0,0) 0)",
           backgroundSize: "100% 4px",
         }}
       >
-        <div className="ml-8 flex w-full items-center justify-between">{children}</div>
+        <div className="ml-8 flex w-full items-center justify-between text-foreground">
+          {children}
+        </div>
       </div>
     </div>
   )

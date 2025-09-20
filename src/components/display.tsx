@@ -241,7 +241,7 @@ export default function Display() {
                                 </a>
                                 . Also check out{" "}
                                 <a
-                                  className="text-neutral-700 underline"
+                                  className="text-primary underline"
                                   href="https://www.youtube.com/watch?v=qu04xLNrk94"
                                   target="_blank"
                                   rel="noreferrer"
@@ -306,7 +306,7 @@ export default function Display() {
       <div className="mt-4 flex gap-4">
         <Button
           onClick={() => downloadSVG(svgRef.current, size)}
-          className="flex-1 bg-background"
+          className="flex-1 bg-card!"
           variant="outline"
         >
           <Download className="mr-2 h-4 w-4" />
@@ -314,7 +314,7 @@ export default function Display() {
         </Button>
         <Button
           onClick={() => downloadPNG(svgRef.current, svgSize, size)}
-          className="flex-1 bg-background"
+          className="flex-1 bg-card!"
           variant="outline"
         >
           <Download className="mr-2 h-4 w-4" />
