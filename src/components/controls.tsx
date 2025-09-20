@@ -144,8 +144,7 @@ export default function Controls() {
                       </button>
                     </TooltipTrigger>
                     <TooltipContent sideOffset={6} className="max-w-[380px] lg:max-w-none">
-                      6×6 Graeco-Latin squares are impossible to construct. This was proven by
-                      Gaston Tarry in 1901.
+                      6×6 Graeco-Latin squares are impossible to construct!
                     </TooltipContent>
                   </Tooltip>
                 </span>
@@ -468,13 +467,13 @@ export default function Controls() {
             <TabsList className="w-full rounded-none bg-transparent p-0">
               <TabsTrigger
                 value="square"
-                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border! data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card! data-[state=active]:text-foreground data-[state=active]:shadow-none"
               >
                 Square
               </TabsTrigger>
               <TabsTrigger
                 value="palette"
-                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border! data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card! data-[state=active]:text-foreground data-[state=active]:shadow-none"
               >
                 Palette
               </TabsTrigger>
