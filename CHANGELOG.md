@@ -1,8 +1,6 @@
-## v1.0.0
+## v1.1.0
 
-- Initial stable release
-- Graeco-Latin square generator for 3x3 to 13x13 squares with full square control
-- Pick from 5 palettes
-- Export to PNG or SVG
-
-
+- Added dialog for showing extra information and FAQs
+- Added sample palette swatch in the palette selector
+- Added support for dark mode
+- Fixed body background color not matching
