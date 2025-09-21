@@ -1,6 +1,24 @@
 <!doctype html>
 <html lang="en" class="overscroll-none">
   <head>
+    <script>
+      ;(function () {
+        var d = document.documentElement
+        var m = window.matchMedia('(prefers-color-scheme: dark)')
+        var apply = function () {
+          if (m.matches) {
+            d.classList.add('dark')
+            d.style.colorScheme = 'dark'
+          } else {
+            d.classList.remove('dark')
+            d.style.colorScheme = 'light'
+          }
+        }
+        apply()
+        if (m.addEventListener) m.addEventListener('change', apply)
+        else m.addListener(apply)
+      })()
+    </script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

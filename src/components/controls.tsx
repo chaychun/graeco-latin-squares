@@ -144,8 +144,7 @@ export default function Controls() {
                       </button>
                     </TooltipTrigger>
                     <TooltipContent sideOffset={6} className="max-w-[380px] lg:max-w-none">
-                      6×6 Graeco-Latin squares are impossible to construct. This was proven by
-                      Gaston Tarry in 1901.
+                      6×6 Graeco-Latin squares are impossible to construct!
                     </TooltipContent>
                   </Tooltip>
                 </span>
@@ -282,13 +281,123 @@ export default function Controls() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="nord">
-                Nord <span className="text-current opacity-60">(Default)</span>
+              <SelectItem value="nord" className="relative">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
+                  <span>
+                    Nord <span className="text-current opacity-60">(Default)</span>
+                  </span>
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: NORD_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
               </SelectItem>
-              <SelectItem value="glacier">Glacier</SelectItem>
-              <SelectItem value="grayscale">Grayscale</SelectItem>
-              <SelectItem value="pastel">Pastel</SelectItem>
-              <SelectItem value="scientific_american_59">Scientific American '59</SelectItem>
+              <SelectItem value="glacier" className="relative">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
+                  <span>Glacier</span>
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GLACIER_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
+              <SelectItem value="grayscale" className="relative">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
+                  <span>Grayscale</span>
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: GRAYSCALE_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
+              <SelectItem value="pastel" className="relative">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
+                  <span>Pastel</span>
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: PASTEL_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
+              <SelectItem value="scientific_american_59" className="relative">
+                <span className="inline-flex w-full items-center whitespace-nowrap pr-24">
+                  <span>Sci Am '59</span>
+                  <span className="-translate-y-1/2 pointer-events-none absolute top-1/2 right-8 inline-flex items-center gap-1">
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[0] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[3] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[6] }}
+                    />
+                    <span
+                      className="h-3 w-3 rounded-sm border border-border"
+                      style={{ backgroundColor: SCIENTIFIC_AMERICAN_59_PALETTE[9] }}
+                    />
+                  </span>
+                </span>
+              </SelectItem>
             </SelectContent>
           </Select>
           <div className="flex items-center gap-2">
@@ -337,13 +446,17 @@ export default function Controls() {
         <div className="flex flex-col gap-4">
           <Card>
             <CardHeader>
-              <CardTitle>Square</CardTitle>
+              <div className="bg-card px-2">
+                <CardTitle>Square</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>{SquareControls}</CardContent>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle>Palette</CardTitle>
+              <div className="bg-card px-2">
+                <CardTitle>Palette</CardTitle>
+              </div>
             </CardHeader>
             <CardContent>{PaletteControls}</CardContent>
           </Card>
@@ -354,13 +467,13 @@ export default function Controls() {
             <TabsList className="w-full rounded-none bg-transparent p-0">
               <TabsTrigger
                 value="square"
-                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border! data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card! data-[state=active]:text-foreground data-[state=active]:shadow-none"
               >
                 Square
               </TabsTrigger>
               <TabsTrigger
                 value="palette"
-                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=active]:shadow-none"
+                className="data-[state=active]:-mb-px rounded-none border-0 border-border border-b px-3 py-2 text-muted-foreground data-[state=active]:border-border! data-[state=active]:border-x data-[state=active]:border-t data-[state=active]:border-b-0 data-[state=active]:bg-card! data-[state=active]:text-foreground data-[state=active]:shadow-none"
               >
                 Palette
               </TabsTrigger>
