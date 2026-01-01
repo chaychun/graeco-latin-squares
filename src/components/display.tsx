@@ -36,7 +36,7 @@ import {
 
 export default function Display() {
   const { size, latinMultiplier, greekMultiplier, method, direct4x4Method } = useGraecoLatinStore()
-  const { paletteType, backgroundShift, foregroundShift, paletteSeed } = usePaletteStore()
+  const { paletteType, shapeType, backgroundShift, foregroundShift, paletteSeed } = usePaletteStore()
 
   const svgRef = useRef<SVGSVGElement>(null)
 
@@ -288,13 +288,22 @@ export default function Display() {
                         height={cellSize}
                         fill={backgroundColors[latinValue]}
                       />
-                      <rect
-                        x={innerX}
-                        y={innerY}
-                        width={innerSize}
-                        height={innerSize}
-                        fill={foregroundColors[greekValue]}
-                      />
+                      {shapeType === "circle" ? (
+                        <circle
+                          cx={x + cellSize / 2}
+                          cy={y + cellSize / 2}
+                          r={innerSize / 2}
+                          fill={foregroundColors[greekValue]}
+                        />
+                      ) : (
+                        <rect
+                          x={innerX}
+                          y={innerY}
+                          width={innerSize}
+                          height={innerSize}
+                          fill={foregroundColors[greekValue]}
+                        />
+                      )}
                     </g>
                   )
                 })

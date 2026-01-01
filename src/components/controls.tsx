@@ -24,7 +24,7 @@ import {
   getMethodDisabled,
   useGraecoLatinStore,
 } from "@/lib/core/graeco-latin/graeco-latin-store"
-import { usePaletteStore } from "@/lib/palette/palette-store"
+import { type ShapeType, usePaletteStore } from "@/lib/palette/palette-store"
 import {
   GLACIER_PALETTE,
   GRAYSCALE_PALETTE,
@@ -61,10 +61,12 @@ export default function Controls() {
   } = useGraecoLatinStore()
   const {
     paletteType,
+    shapeType,
     backgroundShift,
     foregroundShift,
 
     setPaletteType,
+    setShapeType,
     setBackgroundShift,
     setForegroundShift,
     setPaletteSeed,
@@ -267,6 +269,19 @@ export default function Controls() {
 
   const PaletteControls = (
     <div className="space-y-6">
+      <div>
+        <Label>Shape</Label>
+        <Select value={shapeType} onValueChange={(value) => setShapeType(value as ShapeType)}>
+          <SelectTrigger className="mt-2 bg-background">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="square">Square</SelectItem>
+            <SelectItem value="circle">Circle</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       <div>
         <div className="flex items-center justify-between gap-4">
           <Select
